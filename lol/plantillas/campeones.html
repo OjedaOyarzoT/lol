@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <link type="text/css" href='{% static "css/menu.css" %}' rel='stylesheet' />
+
+</head>
+
+<body>
+       {% include "menu.html" %}
+    <p>champs</p>
+    <ul>
+   {{ my_data}}
+</ul>
+
+
+
+</body>
+</html>
