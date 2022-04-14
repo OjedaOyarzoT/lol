@@ -1,0 +1,12 @@
+#elmenu {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-transform: uppercase;
+}
+
+#elmenu li {
+    display:inline-block;
+    margin:  0 30px;
+    color: brown;
+}
