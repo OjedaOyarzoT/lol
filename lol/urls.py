@@ -1,4 +1,4 @@
-"""lolpage URL Configuration
+"""lol URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from lolpage.views import cargarPrincipal
-from lolpage.views import campeones
-from lolpage.views import jugador
+from lol.views import cargarPrincipal
+from lol.views import campeones
+from lol.views import jugador
 
 urlpatterns = [
     path('admin/', admin.site.urls),
