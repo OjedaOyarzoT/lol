@@ -9,12 +9,12 @@ def cargarPrincipal(request):
 	doc = plantillaExterna.render()
 	return HttpResponse(doc)
 
-def campeones(request):
-	plantillaExterna = loader.get_template('campeones.html')
+def jugador(request):
+	plantillaExterna = loader.get_template('jugador.html')
 	doc = plantillaExterna.render()
 	return HttpResponse(doc)
 
-def jugador(request):
+def campeones(request):
     from riotwatcher import LolWatcher, ApiError
 
     lol_watcher = LolWatcher('RGAPI-40419e61-8c7e-47d9-8422-bb2f4f9c4297')
@@ -22,8 +22,6 @@ def jugador(request):
 
     versions = lol_watcher.data_dragon.versions_for_region(my_region)
     champions_version = versions['n']['champion']
-
-
 
     current_champ_list = lol_watcher.data_dragon.champions(champions_version)
     js_data = json.dumps(current_champ_list)
