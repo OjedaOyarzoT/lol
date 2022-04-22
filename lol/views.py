@@ -17,15 +17,7 @@ def campeones(request):
 def jugador(request):
     from riotwatcher import LolWatcher, ApiError
 
-    lol_watcher = LolWatcher('RGAPI-967341d3-9fe9-4612-9816-2afb104798bc')
-
-    my_region = 'na1'
-
-    me = lol_watcher.summoner.by_name(my_region, 'pseudonym117')
-    print(me)
-
-    my_ranked_stats = lol_watcher.league.by_summoner(my_region, me['id'])
-    print(my_ranked_stats)
+    lol_watcher = LolWatcher('RGAPI-40419e61-8c7e-47d9-8422-bb2f4f9c4297')
 
 
     versions = lol_watcher.data_dragon.versions_for_region(my_region)
