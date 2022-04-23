@@ -1,2 +1,1 @@
-# lol
-avisen cuando editen
+# grupo loleros unidos
