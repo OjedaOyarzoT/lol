@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -7,12 +8,11 @@
         <label for="jugador">Buscar jugador:</label>
         <input class="nombre" type="name">
         <input type="submit" value="Buscar">
-      
     </form>
-
-    <form>   
+    
+    <form class ="grid" action ="campeones/" method="POST">  
         <label for="champ">Buscar campe&oacute;n:</label>
-        <input class="pass" type="password">
+        <input id = "o" type="text" name="">
         <input type="submit" value="Buscar">
     </form>
 

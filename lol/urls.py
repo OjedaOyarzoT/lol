@@ -22,7 +22,7 @@ from lol.views import jugador
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('principal/', cargarPrincipal),
-    path('campeones/', campeones),
+    path('', cargarPrincipal),
+    path('campeones/<champ>', campeones),
     path('jugador/', jugador),
     ]
