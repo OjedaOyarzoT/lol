@@ -7,7 +7,7 @@ function App() {
   const [gameList, setGameList] = useState([]); 
 
   function getPlayerGames(event){
-    axios.get("http://localhost:3000/match")
+    axios.get("127.0.0.1:3000/match")
       .then(function(response){
         setGameList(response.data);
       }).catch(function(error){
