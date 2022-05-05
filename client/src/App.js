@@ -7,7 +7,7 @@ function App() {
   const [gameList, setGameList] = useState([]); 
 
   function getPlayerGames(event){
-    axios.get("127.0.0.1:3000/match")
+    axios.get("http://localhost:4000/match")
       .then(function(response){
         setGameList(response.data);
       }).catch(function(error){
@@ -42,6 +42,20 @@ function App() {
           :
           <>
            <p> no tenemos partidas</p>
+           {
+              gameList.map((gameData,index) =>
+                <>
+                 <h2> Game {index +1}</h2>
+                 <div>
+                  {gameData.info.participants.map((data,participantIndex)=> 
+                  <p>JUGADOR {participantIndex+1}: {data.summonerName}, KDA: {data.kills}/{data.deaths}/{data.assists}  </p>
+                  )
+                    }
+                    </div>
+                </>
+              )
+
+           }
           </>
        }
       </div>

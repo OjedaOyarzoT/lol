@@ -1,5 +1,6 @@
 {
   "main": "principal.js",
+  "proxy": "http://127.0.0.1:4000/",
   "scripts": {
     "start:dev": "nodemon src/principal.js"
   },

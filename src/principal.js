@@ -4,13 +4,15 @@ const axios = require('axios');
 const { response } = require('express');
 
 var app = express();
-app.listen(3000)
-app.use(cors());
 
-const API_KEY = "RGAPI-2818de61-abc9-4221-a4a9-d79f2317c0cf"
+const PORT = process.env.PORT || 4000;
+app.use(cors());
+app.listen(4000)
+
+const API_KEY = "RGAPI-2e78558b-98b3-4484-8b94-baccbf4a535c"
 
 function getPlayerPUUID(playername){
-    return axios.get("https://la2.api.riotgames.com"+"/lol/summoner/v4/summoners/by-name/"+ playername+"?api_key=" + API_KEY)
+    return axios.get("https://la2.api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/"+ playername+"?api_key=" + API_KEY)
     .then(response => {
         console.log(response.data);
         return response.data.puuid
@@ -29,7 +31,7 @@ app.get("/match",async(req,res)=>{
     var matchDataArray = [];
     for(var i = 0; i < gameIDs.length - 15; i++){
         const matchID = gameIDs[i];
-        const matchData = await axios.get("https://americas.api.riotgames.com"+"/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
+        const matchData = await axios.get("https://americas.api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
            .then(response => response.data)
            .catch(err => err)
         matchDataArray.push(matchData);
