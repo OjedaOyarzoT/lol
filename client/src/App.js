@@ -43,7 +43,8 @@ function App() {
       </div>
        {JSON.stringify(playerData) !== '{}' ? <>
        <p> {playerData.name}</p>
-       <p> {playerData.summonerLevel}</p>
+       <img width="100" height="100" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png"}></img>
+       <p> Nivel :{playerData.summonerLevel}</p>
        </>
        :
         <><p>no tenemos datos del jugador</p></>
@@ -108,3 +109,5 @@ export default App;
 <option value="ru">RUSIA</option>
 <option value="tr1">TURQUÍA</option> 
 </select>*/
+
+
