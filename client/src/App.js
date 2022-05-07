@@ -1,11 +1,11 @@
 import {useState} from 'react';
-//import {setState} from 'react';
 import axios from 'axios';
 import './App.css';
 
 function App() {
   const [searchText, setSearchText] = useState("");
   const [gameList, setGameList] = useState([]); 
+  //const [regiom, setRegion] = useState([]);
   const [playerData, setPlayerData] = useState([]);
   const apikey = "RGAPI-58358b62-b6be-40f1-b4b9-50ca7f0e9e7e";
 
@@ -30,28 +30,26 @@ function App() {
       })
   }
 
-  //console.log(gameList);
+  console.log(gameList);
  
-   //  <button onClick={e => getPlayerGames(e,{playerData.name})}>Buscar ultims 5 partidas de un jugador</button>
-
   return (
     <div className="App">
       <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
-
       <div className="container">
       <button onClick={e => searchForPlayer(searchText)}>Buscar un jugador</button>
+
       </div>
        {JSON.stringify(playerData) !== '{}' ? <>
        <p> {playerData.name}</p>
-       <img width="100" height="100" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png"}></img>
+       <img width="100" height="100" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
        <p> Nivel :{playerData.summonerLevel}</p>
+
        </>
        :
         <><p>no tenemos datos del jugador</p></>
-
        }
       
-      {gameList.length !==0 ?
+       {gameList.length !==0 ?
           <>
            <p> tenemos partidas</p>
            {
@@ -72,20 +70,6 @@ function App() {
           :
           <>
            <p> no tenemos partidas</p>
-           {
-              gameList.map((gameData,index) =>
-                <>
-                 <h2> Game {index +1}</h2>
-                 <div>
-                  {gameData.info.participants.map((data,participantIndex)=> 
-                  <p>JUGADOR {participantIndex+1}: {data.summonerName}, KDA: {data.kills}/{data.deaths}/{data.assists}  </p>
-                  )
-                    }
-                    </div>
-                </>
-              )
-
-           }
           </>
        }
       </div>

@@ -5,7 +5,7 @@ const { response } = require('express');
 
 var app = express();
 
-const PORT = process.env.PORT || 4000;
+
 app.use(cors());
 app.listen(4000)
 
@@ -20,13 +20,13 @@ function getPlayerPUUID(playername){
 }
 
 app.get("/match/:summonerName",async(req,res)=>{
-    const summonerName  = req.params['summonerName'];
-    const PUUID = await getPlayerPUUID(summonerName.summonerName);
+    const summonerName = req.params.summonerName;
+    const PUUID = await getPlayerPUUID(summonerName);
     API_CALL = "https://americas.api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
         .then(response => response.data)
         .catch(err => err)
-    //console.log(gameIDs);
+    console.log(gameIDs);
 
     var matchDataArray = [];
     for(var i = 0; i < gameIDs.length - 15; i++){
