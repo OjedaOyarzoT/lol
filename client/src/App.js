@@ -11,14 +11,14 @@ function App() {
   const apikey = "RGAPI-58358b62-b6be-40f1-b4b9-50ca7f0e9e7e";
 
   function searchForPlayer(event){
-        var call = "https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+searchText+"?api_key="+apikey;
+        var call = "https://"+regiom+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+searchText+"?api_key="+apikey;
         axios.get(call).then(function(response){
           setPlayerData(response.data);
         }).catch(function(error){
           console.log(error);
         });
 
-        axios.get("http://localhost:4000/match/"+playerData.name)
+        axios.get("http://localhost:4000/match/"+playerData.name+"/"+regiom)
         .then(function(response){
              setGameList(response.data);
         }).catch(function(error){
@@ -27,13 +27,26 @@ function App() {
       }
   
       console.log(playerData);
-
+      
 
     
   return (
     <div className="App">
 
-      <input id ="pe" type="text" onChange={e => setSearchText(e.target.value)} ></input>
+      <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
+      <select value={regiom} onChange={e => setRegion(e.target.value)}>
+<option value="br1">BRASIL</option>
+<option value="kr">COREA</option>
+<option value="eun1">EUROPA NÓRDICA Y ESTE</option>
+<option value="euw1">EUROPA OESTE</option>
+<option value="jp1">JAPÓN</option>
+<option value="la1">LATINOAMÉRICA NORTE</option>
+<option value="la2">LATINOAMÉRICA SUR</option>
+<option value="na1">NORTEAMÉRICA</option>
+<option value="oc1">OCEANÍA</option>
+<option value="ru">RUSIA</option>
+<option value="tr1">TURQUÍA</option> 
+</select>
       <div className="container">
       <button onClick={e => searchForPlayer(searchText)} >Buscar un jugador</button>
       </div>
@@ -74,20 +87,5 @@ function App() {
       }
 export default App;
 
-
-/*
-<select id="m" value={reg} onChange={e => setRegion(e.target.value)}>
-<option value="br1">BRASIL</option>
-<option value="kr">COREA</option>
-<option value="eun1">EUROPA NÓRDICA Y ESTE</option>
-<option value="euw1">EUROPA OESTE</option>
-<option value="jp1">JAPÓN</option>
-<option value="la1">LATINOAMÉRICA NORTE</option>
-<option value="la2">LATINOAMÉRICA SUR</option>
-<option value="na1">NORTEAMÉRICA</option>
-<option value="oc1">OCEANÍA</option>
-<option value="ru">RUSIA</option>
-<option value="tr1">TURQUÍA</option> 
-</select>*/
 
 
