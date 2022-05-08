@@ -1,9 +1,7 @@
 import {useState} from 'react';
-import { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { render } from 'express/lib/response';
 
 function App() {
   const [searchText, setSearchText] = useState("");
@@ -19,42 +17,35 @@ function App() {
         }).catch(function(error){
           console.log(error);
         });
-        getPlayerGames.bind(this,searchText);
+
+        axios.get("http://localhost:4000/match/"+playerData.name)
+        .then(function(response){
+             setGameList(response.data);
+        }).catch(function(error){
+             console.log(error);
+        })
       }
   
       console.log(playerData);
 
-  function getPlayerGames(e,name){
-    axios.get("http://localhost:4000/match/"+name)
-      .then(function(response){
-        setGameList(response.data);
-      }).catch(function(error){
-        console.log(error);
-      })
-  }
 
- 
-  console.log(gameList);
     
-
-
   return (
     <div className="App">
 
-      <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
+      <input id ="pe" type="text" onChange={e => setSearchText(e.target.value)} ></input>
       <div className="container">
-      <button onClick={e => searchForPlayer(searchText)}>Buscar un jugador</button>
+      <button onClick={e => searchForPlayer(searchText)} >Buscar un jugador</button>
       </div>
        {JSON.stringify(playerData) !== '{}' ? <>
        <p> {playerData.name}</p>
        <img width="100" height="100" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
-       <p> Nivel :{playerData.summonerLevel}</p>
-
+       <p> Nivel :{playerData.summonerLevel}</p>        
        </>
        :
         <><p>no tenemos datos del jugador</p></>
        }
-      
+        
        {gameList.length !==0 ?
           <>
            <p> tenemos partidas</p>
