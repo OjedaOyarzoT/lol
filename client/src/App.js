@@ -19,7 +19,7 @@ function App() {
         }).catch(function(error){
           console.log(error);
         });
-        getPlayerGames(searchText);
+        getPlayerGames.bind(this,searchText);
       }
   
       console.log(playerData);
