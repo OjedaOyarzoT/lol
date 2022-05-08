@@ -1,11 +1,14 @@
 import {useState} from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { render } from 'express/lib/response';
 
 function App() {
   const [searchText, setSearchText] = useState("");
   const [gameList, setGameList] = useState([]); 
-  //const [regiom, setRegion] = useState([]);
+  const [regiom, setRegion] = useState([]);
   const [playerData, setPlayerData] = useState([]);
   const apikey = "RGAPI-58358b62-b6be-40f1-b4b9-50ca7f0e9e7e";
 
@@ -30,14 +33,17 @@ function App() {
       })
   }
 
-  console.log(gameList);
  
+  console.log(gameList);
+    
+
+
   return (
     <div className="App">
+
       <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
       <div className="container">
       <button onClick={e => searchForPlayer(searchText)}>Buscar un jugador</button>
-
       </div>
        {JSON.stringify(playerData) !== '{}' ? <>
        <p> {playerData.name}</p>
@@ -74,8 +80,7 @@ function App() {
        }
       </div>
   );
-}
-
+      }
 export default App;
 
 
