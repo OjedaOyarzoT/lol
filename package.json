@@ -2,13 +2,15 @@
   "main": "principal.js",
   "proxy": "http://127.0.0.1:4000/",
   "scripts": {
-    "start:dev": "nodemon src/principal.js"
+    "start:dev": "nodemon src/principal.js",
+    "start:champ": "nodemon src/champions.js",
+    "start:summ": "nodemon src/summoners.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "nodemon": "^2.0.16",
-    "require": "^2.4.20"
+    "require": "^0.4.4"
   }
 }
