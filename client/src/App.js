@@ -2,13 +2,15 @@ import {useState} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import { response } from 'express';
 
 function App() {
   const [searchText, setSearchText] = useState("");
   const [gameList, setGameList] = useState([]); 
   const [regiom, setRegion] = useState([]);
   const [playerData, setPlayerData] = useState([]);
-  const apikey = "RGAPI-58358b62-b6be-40f1-b4b9-50ca7f0e9e7e";
+  const [playerDataRank, setPlayerDataRank] = useState([]);
+  const apikey = "RGAPI-a017be0f-b150-4e48-b9c1-6dd82f48f1bd";
 
   function searchForPlayer(event){
         var call = "https://"+regiom+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+searchText+"?api_key="+apikey;
@@ -24,9 +26,17 @@ function App() {
         }).catch(function(error){
              console.log(error);
         })
+        
+        axios.get("https://"+regiom+".api.riotgames.com/lol/league/v4/entries/by-summoner/"+playerData.id+"?api_key="+apikey)
+        .then(function(response){
+          setPlayerDataRank(response.data);
+        }).catch(function(error){
+             console.log(error);
+        })
+
       }
-  
-      console.log(playerData);
+
+      console.log(playerDataRank);
       
 
     
@@ -58,6 +68,16 @@ function App() {
        :
         <><p>no tenemos datos del jugador</p></>
        }
+
+       
+      {JSON.stringify(playerDataRank) !== '{}' ? <>
+            <p> {playerDataRank.tier}</p>
+            <p> {playerDataRank.rank}</p>  
+            <p>Winrate: {playerDataRank.wins} + {playerDataRank.losses}</p>  
+       </>
+       :
+        <><p>Este invocador no rankea</p></>
+       }
         
        {gameList.length !==0 ?
           <>
@@ -76,6 +96,7 @@ function App() {
               )
 
            }
+
           </>
           :
           <>
