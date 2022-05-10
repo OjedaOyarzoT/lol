@@ -4,10 +4,8 @@ const axios = require('axios');
 const { response } = require('express');
 
 var app = express();
-
-
 app.use(cors());
-app.listen(4000)
+app.listen(4000);//hjjhhjhj
 
 const API_KEY = "RGAPI-a017be0f-b150-4e48-b9c1-6dd82f48f1bd";
 
