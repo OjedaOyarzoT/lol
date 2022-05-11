@@ -2,9 +2,11 @@ import {useState} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-//import { response } from 'express';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
+
+
   const [searchText, setSearchText] = useState("");
   const [gameList, setGameList] = useState([]); 
   const [regiom, setRegion] = useState([]);
@@ -41,7 +43,9 @@ function App() {
 
     
   return (
+    <Router>
     <div className="App">
+      
 
       <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
       <select value={regiom} onChange={e => setRegion(e.target.value)}>
@@ -104,6 +108,8 @@ function App() {
           </>
        }
       </div>
+
+      </Router>
   );
       }
 export default App;
