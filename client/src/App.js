@@ -7,11 +7,9 @@ import {  BrowserRouter as Router,  Routes, Route} from "react-router-dom";
 import PagPrincipal from "./PagPrincipal";
 import Jugadores from './Jugadores';
 
-
 function App() {
 
-    
-  return (
+return (
          
     <Router>
       <Routes>
@@ -19,9 +17,8 @@ function App() {
         <Route path='/jugador' element={<Jugadores/>} />
       </Routes>
     </Router>
-  
-     
-  );
+          
+);
 }
 export default App;
 

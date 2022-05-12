@@ -2,6 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import SearchForPlayer from './Jugadores';
 
 
 
@@ -9,10 +10,6 @@ function PagPrincipal() {
 
     const [searchText, setSearchText] = useState("");
     const [regiom, setRegion] = useState([]);
-
-    function redireccionar(){
-
-    };
 
  return(
 <div className="PagPrincipal">
@@ -31,7 +28,7 @@ function PagPrincipal() {
     <option value="tr1">TURQUÍA</option> 
     </select>
           <div className="container">
-          <button onClick={e => redireccionar(searchText)} >Buscar un jugador</button>
+          <button onClick={e => SearchForPlayer(searchText)} >Buscar un jugador</button>
           </div>
 
 

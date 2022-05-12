@@ -10,6 +10,13 @@ app.listen(4000);
 
 const API_KEY = config.API_KEY ;
 
+function getPlayerID(playername,reg){
+    return axios.get("https://"+reg+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+playername+"?api_key="+API_KEY)
+    .then(response => {
+        return response.data.id
+    }).catch(err => err);
+}
+
 function getPlayerPUUID(playername,reg){
     return axios.get("https://"+reg+".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/"+ playername+"?api_key=" + API_KEY)
     .then(response => {
@@ -47,3 +54,27 @@ app.get("/match/:summonerName/:region",async(req,res)=>{
 
     res.json(matchDataArray);
 });
+
+app.get("/rank/:summonerName/:region",async(req,res)=>{
+    const summonerName = req.params.summonerName;
+    const region = req.params.region;
+    let idJugador = getPlayerID(summonerName,region);
+   
+    idJugador.then(function(result) {
+        const RANKEDINFO = axios.get("https://"+region+".api.riotgames.com/lol/league/v4/entries/by-summoner/"+result+"?api_key="+API_KEY)
+        .then(function(response){
+          console.log(response.data[0]);
+          response.data[0].winrate = ((response.data[0].wins/(response.data[0].wins+response.data[0].losses))*100).toFixed(1)
+          res.json(response.data[0]);
+        }).catch(function(error){
+             console.log(error);
+             res.json("{}");
+        });
+
+     });
+
+});
+
+
+
+
