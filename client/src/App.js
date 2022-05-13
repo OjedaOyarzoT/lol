@@ -3,7 +3,7 @@
 import './App.css';
 //import React from 'react';
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {  BrowserRouter as Router,  Routes, Route} from "react-router-dom";
+import {  BrowserRouter as Router,  Routes, Route ,hashHistory }  from "react-router-dom";
 import PagPrincipal from "./PagPrincipal";
 import Jugadores from './Jugadores';
 
@@ -14,7 +14,7 @@ return (
     <Router>
       <Routes>
         <Route path='/' element={<PagPrincipal/>} />
-        <Route path='/jugador' element={<Jugadores/>} />
+        <Route path='/jugador/:suNombre/:suRegion' element={<Jugadores/>} />
       </Routes>
     </Router>
           

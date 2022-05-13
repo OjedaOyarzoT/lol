@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -11,16 +11,23 @@ import DIAMOND from './images/DIAMOND.png';
 import MASTER from './images/MASTER.png';
 import GRANDMASTER from './images/GRANDMASTER.png';
 import CHALLENGER from './images/CHALLENGER.png';
+import { useParams } from 'react-router-dom';
 
-
-function Jugadores() {
+function Jugadores({ match, history }) {
     
   const [searchText, setSearchText] = useState("");
   const [gameList, setGameList] = useState([]); 
   const [regiom, setRegion] = useState([]);
   const [playerData, setPlayerData] = useState([]);
   const [playerDataRank, setPlayerDataRank] = useState([]);
-  const apikey = "RGAPI-d03ffe84-1d20-41cf-a17a-ba2acb6dc061";
+  const {suNombre} = useParams();
+  const {suRegion} = useParams();
+  const [loading, setLoading] = useState(0)
+
+  const apikey = "RGAPI-722ea083-1b2c-472c-b4da-4da37e91e4ac";
+
+  const elnombre = {suNombre}.suNombre;
+  const laregion = {suRegion}.suRegion;
 
   function elo(tier){
     switch(tier){
@@ -46,53 +53,88 @@ function Jugadores() {
     }
   }
 
-  function searchForPlayer(event){
-        var call = "https://"+regiom+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+searchText+"?api_key="+apikey;
-       
+
+  useEffect(() => {
+
+     async function loadData() {
+      setLoading(1);
+
+        var call = "https://"+laregion+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+elnombre+"?api_key="+apikey;
           axios.get(call).then(function(response){
           setPlayerData(response.data);
-          console.log(response.status);
-         }).catch(function(error){
+         })
+         .catch(function(error){
           console.log(error);
         });
 
-        axios.get("http://localhost:4000/rank/"+searchText+"/"+regiom)
+        axios.get("http://localhost:4000/rank/"+elnombre+"/"+laregion)
         .then(function(response){
              setPlayerDataRank(response.data);
-             console.log(response.data);
-        }).catch(function(error){
+        })
+        .catch(function(error){
              console.log(error);
         });
         
-        axios.get("http://localhost:4000/match/"+searchText+"/"+regiom)
+        axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
         .then(function(response){
              setGameList(response.data);
-        }).catch(function(error){
+        })
+        .catch(function(error){
              console.log(error);
-        });    
+        });   
+        setLoading(0);
+      }
+      loadData();
 
+      }, [])
+
+
+      function buscador(laregion,elnombre){
+
+        var call = "https://"+laregion+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+elnombre+"?api_key="+apikey;
+          axios.get(call).then(function(response){
+          setPlayerData(response.data);
+         })
+         .catch(function(error){
+          console.log(error);
+        });
+
+        axios.get("http://localhost:4000/rank/"+elnombre+"/"+laregion)
+        .then(function(response){
+             setPlayerDataRank(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        });
+        
+        axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
+        .then(function(response){
+             setGameList(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        });   
       }
 
       return (
         <div className="Jugadores">
-      
-    
           <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
-          <select value={regiom} onChange={e => setRegion(e.target.value)}>
-    <option value="br1">BRASIL</option>
-    <option value="kr">COREA</option>
-    <option value="eun1">EUROPA NÓRDICA Y ESTE</option>
-    <option value="euw1">EUROPA OESTE</option>
-    <option value="jp1">JAPÓN</option>
-    <option value="la1">LATINOAMÉRICA NORTE</option>
-    <option value="la2">LATINOAMÉRICA SUR</option>
-    <option value="na1">NORTEAMÉRICA</option>
-    <option value="oc1">OCEANÍA</option>
-    <option value="ru">RUSIA</option>
-    <option value="tr1">TURQUÍA</option> 
-    </select>
+          <select onLoad={e => setRegion(e.target.value)} onChange={e => setRegion(e.target.value)}>
+
+             <option value="br1">BRASIL</option>
+             <option value="kr">COREA</option>
+             <option value="eun1">EUROPA NÓRDICA Y ESTE</option>
+             <option value="euw1">EUROPA OESTE</option>
+             <option value="jp1">JAPÓN</option>
+             <option value="la1">LATINOAMÉRICA NORTE</option>
+             <option value="la2">LATINOAMÉRICA SUR</option>
+             <option value="na1">NORTEAMÉRICA</option>
+             <option value="oc1">OCEANÍA</option>
+             <option value="ru">RUSIA</option>
+             <option value="tr1">TURQUÍA</option> 
+          </select>
           <div className="container">
-          <button onClick={e => searchForPlayer(searchText)} >Buscar un jugador</button>
+          <button  onClick={e => buscador(regiom,searchText)}  >Buscar un jugador</button>
           </div>
            {JSON.stringify(playerData) !== "{}" ? <>
            <p> {playerData.name}</p>
@@ -140,9 +182,9 @@ function Jugadores() {
                <p> no tenemos partidas</p>
               </>
            }
-          </div>
-  
+        </div>
+
+       
       );
-    
 }
     export default Jugadores;
