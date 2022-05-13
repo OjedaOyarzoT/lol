@@ -89,32 +89,7 @@ function Jugadores({ match, history }) {
       }, [])
 
 
-      function buscador(laregion,elnombre){
-
-        var call = "https://"+laregion+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+elnombre+"?api_key="+apikey;
-          axios.get(call).then(function(response){
-          setPlayerData(response.data);
-         })
-         .catch(function(error){
-          console.log(error);
-        });
-
-        axios.get("http://localhost:4000/rank/"+elnombre+"/"+laregion)
-        .then(function(response){
-             setPlayerDataRank(response.data);
-        })
-        .catch(function(error){
-             console.log(error);
-        });
-        
-        axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
-        .then(function(response){
-             setGameList(response.data);
-        })
-        .catch(function(error){
-             console.log(error);
-        });   
-      }
+ 
 
       return (
         <div className="Jugadores">
@@ -134,7 +109,7 @@ function Jugadores({ match, history }) {
              <option value="tr1">TURQUÍA</option> 
           </select>
           <div className="container">
-          <button  onClick={e => buscador(regiom,searchText)}  >Buscar un jugador</button>
+          <a href={`../${searchText}/${regiom}`} ><button >Buscar un jugador</button></a>
           </div>
            {JSON.stringify(playerData) !== "{}" ? <>
            <p> {playerData.name}</p>
