@@ -14,17 +14,16 @@ import CHALLENGER from './images/CHALLENGER.png';
 import { useParams } from 'react-router-dom';
 
 function Jugadores({ match, history }) {
-    
-  const [searchText, setSearchText] = useState("");
+  
+  const apikey = "RGAPI-722ea083-1b2c-472c-b4da-4da37e91e4ac";
   const [gameList, setGameList] = useState([]); 
-  const [regiom, setRegion] = useState([]);
-  const [playerData, setPlayerData] = useState([]);
+  const [loading, setLoading] = useState(0);
   const [playerDataRank, setPlayerDataRank] = useState([]);
+  const [playerData, setPlayerData] = useState([]);
+  const [regiom, setRegion] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const {suNombre} = useParams();
   const {suRegion} = useParams();
-  const [loading, setLoading] = useState(0)
-
-  const apikey = "RGAPI-722ea083-1b2c-472c-b4da-4da37e91e4ac";
 
   const elnombre = {suNombre}.suNombre;
   const laregion = {suRegion}.suRegion;
@@ -88,13 +87,10 @@ function Jugadores({ match, history }) {
 
       }, [])
 
-
- 
-
       return (
         <div className="Jugadores">
           <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
-          <select onLoad={e => setRegion(e.target.value)} onChange={e => setRegion(e.target.value)}>
+          <select onChange={e => setRegion(e.target.value)}>
 
              <option value="br1">BRASIL</option>
              <option value="kr">COREA</option>
@@ -110,6 +106,7 @@ function Jugadores({ match, history }) {
           </select>
           <div className="container">
           <a href={`../${searchText}/${regiom}`} ><button >Buscar un jugador</button></a>
+
           </div>
            {JSON.stringify(playerData) !== "{}" ? <>
            <p> {playerData.name}</p>
@@ -120,26 +117,28 @@ function Jugadores({ match, history }) {
             <><p>no tenemos datos del jugador</p></>
            }
 
-          {JSON.stringify(playerDataRank) !== '{}'  ? <>
-         
+          {JSON.stringify(playerDataRank) == '"{}"'  ? <>
+          <h3> este invocador no rankea</h3>
+           </>
+           :
+           <>
+             <div>
           <img height="100" width="100" src={elo(playerDataRank.tier)} alt="no rankea"></img>
                 <p> {playerDataRank.tier} {playerDataRank.rank}</p>
                 <p> Winrate : {playerDataRank.winrate} %</p>
                 <p> LP: {playerDataRank.leaguePoints}</p>
-           </>
-           :
-           <>
-             <h1> este invocador no rankea</h1>
+                </div>
+
+           
            </>
            }
             
            {gameList.length !==0 ?
               <>
-               <p> tenemos partidas</p>
                {
                   gameList.map((gameData,index) =>
                     <>
-                     <h2> Game {index +1}</h2>
+                     <h2> Partida {index +1}</h2>
                      <div>
                       {gameData.info.participants.map((data,participantIndex)=> 
                       <p>JUGADOR {participantIndex+1}: {data.summonerName}, KDA: {data.kills}/{data.deaths}/{data.assists}  </p>
