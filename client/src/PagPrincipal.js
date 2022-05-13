@@ -30,6 +30,14 @@ function PagPrincipal({ history }) {
           <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar un jugador</button></a>
         
           <h1>Página principal</h1>
+
+
+
+
+
+
+
+          
 </div>
 
       );
