@@ -2,20 +2,16 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import searchForPlayer from "./Jugadores";
 import { useParams } from 'react-router-dom';
-const API_KEY = "RGAPI-150157cb-0d15-4dd5-bdf5-80acf84ae345";
 
+const config = require('./config.js');
+const API_KEY = config.API_KEY ;
 var call = "https://la2.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+API_KEY;
 var call2 = "http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion.json";
-
-var rotacion = [];
 var datos = [];
 
-
   
-function PagPrincipal({ history }) {
-      
+function PagPrincipal({ history }) {    
 
     const [suNombre, setSummoner] = useState("");
     const [suRegion, setRegion] = useState([]);

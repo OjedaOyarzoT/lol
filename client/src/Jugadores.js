@@ -12,16 +12,18 @@ import MASTER from './images/MASTER.png';
 import GRANDMASTER from './images/GRANDMASTER.png';
 import CHALLENGER from './images/CHALLENGER.png';
 import { useParams } from 'react-router-dom';
+const config = require('./config.js');
 
 function Jugadores({ match, history }) {
   
-  const apikey = "RGAPI-150157cb-0d15-4dd5-bdf5-80acf84ae345";
+  const apikey = config.API_KEY ;
   const [gameList, setGameList] = useState([]); 
   const [loading, setLoading] = useState(0);
   const [playerDataRank, setPlayerDataRank] = useState([]);
   const [playerData, setPlayerData] = useState([]);
   const [regiom, setRegion] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [summonerId, setId] = useState("");
   const {suNombre} = useParams();
   const {suRegion} = useParams();
 
@@ -52,7 +54,6 @@ function Jugadores({ match, history }) {
     }
   }
 
-
   useEffect(() => {
 
      async function loadData() {
@@ -61,10 +62,16 @@ function Jugadores({ match, history }) {
         var call = "https://"+laregion+".api.riotgames.com/lol/summoner/v4/summoners/by-name/"+elnombre+"?api_key="+apikey;
           axios.get(call).then(function(response){
           setPlayerData(response.data);
+          setId(response.data.id);
          })
          .catch(function(error){
           console.log(error);
         });
+
+        var call2 = "https://"+laregion+".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/"+summonerId;
+        
+
+
 
         axios.get("http://localhost:4000/rank/"+elnombre+"/"+laregion)
         .then(function(response){
@@ -81,6 +88,7 @@ function Jugadores({ match, history }) {
         .catch(function(error){
              console.log(error);
         });   
+
         setLoading(0);
       }
       loadData();
@@ -110,7 +118,7 @@ function Jugadores({ match, history }) {
           </div>
            {JSON.stringify(playerData) !== "{}" ? <>
            <p> {playerData.name}</p>
-           <img width="100" height="100" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
+           <img width="140" height="140" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
            <p> Nivel :{playerData.summonerLevel}</p>        
            </>
            :
@@ -123,7 +131,7 @@ function Jugadores({ match, history }) {
            :
            <>
              <div>
-          <img height="100" width="100" src={elo(playerDataRank.tier)} alt="no rankea"></img>
+          <img height="140" width="140" src={elo(playerDataRank.tier)} alt="no rankea"></img>
                 <p> {playerDataRank.tier} {playerDataRank.rank}</p>
                 <p> Winrate : {playerDataRank.winrate} %</p>
                 <p> LP: {playerDataRank.leaguePoints}</p>
@@ -139,12 +147,17 @@ function Jugadores({ match, history }) {
                   gameList.map((gameData,index) =>
                     <>
                      <h2> Partida {index +1}</h2>
-                     <div>
+                     <table class="default">
                       {gameData.info.participants.map((data,participantIndex)=> 
-                      <p>JUGADOR {participantIndex+1}: {data.summonerName}, KDA: {data.kills}/{data.deaths}/{data.assists}  </p>
+                      <tr>
+                      <th><img width="70" height="70" alt="campeón" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${data.championName}.png`}></img></th>   
+                      <td><h3>{data.summonerName}</h3></td><td><h3>{data.kills}/{data.deaths}/{data.assists}</h3></td>
+                      <td> <img width="70" height="70" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ data.profileIcon+".png" } alt="no has buscado jugador"></img></td>
+                      <td></td>
+                      </tr>
                       )
                         }
-                        </div>
+                        </table>
                     </>
                   )
     
