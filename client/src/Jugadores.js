@@ -26,6 +26,7 @@ function Jugadores({ match, history }) {
   const [summonerId, setId] = useState("");
   const {suNombre} = useParams();
   const {suRegion} = useParams();
+  const [estilo, setStyle] = useState("cont");
 
   const elnombre = {suNombre}.suNombre;
   const laregion = {suRegion}.suRegion;
@@ -53,6 +54,16 @@ function Jugadores({ match, history }) {
       default: break;
     }
   }
+  function cambio(ide){
+    switch(ide){
+      case "false":
+          console.log(ide);
+          return "#f93034";
+      case "true":
+          console.log(ide);
+          return "lightblue";
+  }
+}
 
   useEffect(() => {
 
@@ -70,8 +81,6 @@ function Jugadores({ match, history }) {
 
         var call2 = "https://"+laregion+".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/"+summonerId;
         
-
-
 
         axios.get("http://localhost:4000/rank/"+elnombre+"/"+laregion)
         .then(function(response){
@@ -117,24 +126,26 @@ function Jugadores({ match, history }) {
 
           </div>
            {JSON.stringify(playerData) !== "{}" ? <>
-           <p> {playerData.name}</p>
+           <div style={{display: 'flex', justifyContent: 'center'}}>
+          
            <img width="140" height="140" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
-           <p> Nivel :{playerData.summonerLevel}</p>        
+           <p><h1> {playerData.name}</h1><h5> Nivel {playerData.summonerLevel}</h5> </p>    
+           </div> 
            </>
            :
-            <><p>no tenemos datos del jugador</p></>
+            <><p style={{display: 'flex', justifyContent: 'center'}} >no tenemos datos del jugador</p></>
            }
 
           {JSON.stringify(playerDataRank) == '"{}"'  ? <>
-          <h3> este invocador no rankea</h3>
+          <h3 style={{display: 'flex', justifyContent: 'center'}} > Este invocador no rankea</h3>
            </>
            :
            <>
-             <div>
+             <div style={{display: 'flex', justifyContent: 'center'}} >
           <img height="140" width="140" src={elo(playerDataRank.tier)} alt="no rankea"></img>
-                <p> {playerDataRank.tier} {playerDataRank.rank}</p>
-                <p> Winrate : {playerDataRank.winrate} %</p>
-                <p> LP: {playerDataRank.leaguePoints}</p>
+                <p><h3>{playerDataRank.tier} {playerDataRank.rank}  {playerDataRank.leaguePoints} PL</h3>
+                <h5>Winrate : {playerDataRank.winrate} % </h5>
+                </p>
                 </div>
 
            
@@ -146,18 +157,22 @@ function Jugadores({ match, history }) {
                {
                   gameList.map((gameData,index) =>
                     <>
-                     <h2> Partida {index +1}</h2>
+                    <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
+                   
                      <table class="default">
+                     <h2> Partida {index +1}</h2>
                       {gameData.info.participants.map((data,participantIndex)=> 
-                      <tr>
-                      <th><img width="70" height="70" alt="campeón" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${data.championName}.png`}></img></th>   
-                      <td><h3>{data.summonerName}</h3></td><td><h3>{data.kills}/{data.deaths}/{data.assists}</h3></td>
-                      <td> <img width="70" height="70" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ data.profileIcon+".png" } alt="no has buscado jugador"></img></td>
-                      <td></td>
+                      <tr style={{backgroundColor: cambio(String(data.win))}}>
+                      <th><img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${data.championName}.png`}></img></th>  
+                      <td><img width="35" height="35" src={``}></img></td>
+                      <td width="260"><h4>{data.summonerName}</h4></td><td width="150"><h4>{data.kills}/{data.deaths}/{data.assists}</h4></td>
+                      <td> <img width="70" height="70" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ data.profileIcon+".png" } alt="icono"></img></td>
                       </tr>
+                      
                       )
                         }
-                        </table>
+                     </table>
+                     </div>
                     </>
                   )
     
