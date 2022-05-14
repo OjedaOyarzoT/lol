@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom';
 
 function Jugadores({ match, history }) {
   
-  const apikey = "RGAPI-722ea083-1b2c-472c-b4da-4da37e91e4ac";
+  const apikey = "RGAPI-150157cb-0d15-4dd5-bdf5-80acf84ae345";
   const [gameList, setGameList] = useState([]); 
   const [loading, setLoading] = useState(0);
   const [playerDataRank, setPlayerDataRank] = useState([]);
