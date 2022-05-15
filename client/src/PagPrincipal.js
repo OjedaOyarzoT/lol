@@ -25,20 +25,29 @@ const Auto = () => {
     setOptions(campeones);
   }, [])
 
+  const setChamp = champ => {
+    setSearch(champ);
+    setDisplay(false);
+  }
+
   return (
     <div className="flex-container flex-column pos-rel">
-      <input id="auto" onClick={() => setDisplay(!display)} placeholder="Nombre del Campeon"></input>
+      <h3>Buscar Campeon</h3>
+      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeon" value={search} onChange={event => setSearch(event.target.value)}></input>
       {display && (
         <div className='autoContainer'>
-          {options.map((v,i) => {
-            return <div className="option" key={i}>
+          {options.filter(({name}) => name.indexOf(search) > -1).map((v,i) => {
+            return (
+              <div onClick={() => setChamp(v.name)} className="option" key={i}>
               <span>{v.name}</span>
               <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
-            </div>
+              </div>
+            )
           })}
         </div>
       )}
-    </div>
+      <a href={`./Campeon/${search}`}><button>Buscar</button></a>    
+    </div> 
   );
 };
   
@@ -95,6 +104,8 @@ const nombres = []
 
  return(
 <div className="PagPrincipal">
+    <h1>Página principal</h1>
+    <h3>Buscar jugador</h3>
     <input type="text" value={suNombre} onChange={e => setSummoner(e.target.value)} placeholder="suNombre"></input>
     <select value={suRegion} onChange={e => setRegion(e.target.value)}>
               <option value="br1">BRASIL</option>
@@ -109,8 +120,7 @@ const nombres = []
               <option value="ru">RUSIA</option>
               <option value="tr1">TURQUÍA</option> 
     </select>   
-    <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar un jugador</button></a>    
-    <h1>Página principal</h1>
+    <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar</button></a>    
     <div>
       <Auto />
     </div>
