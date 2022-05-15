@@ -62,8 +62,10 @@ app.get("/partida/:summonerName/:region",async(req,res)=>{
     idJug.then(function(result) {
     const lapartida = axios.get("https://"+region+".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/"+result+"?api_key="+API_KEY)
       .then(function(response){
-        console.log(response.data);    
-        res.json(response.data);
+        console.log(response.data); 
+        var arr = [];   
+        arr.push(response.data)
+        res.json(arr);
       }).catch(function(error){
            console.log(error);
            res.json("{}");
@@ -91,6 +93,8 @@ app.get("/rank/:summonerName/:region",async(req,res)=>{
      });
 
 });
+
+
 
 
 

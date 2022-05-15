@@ -12,6 +12,7 @@ import MASTER from './images/MASTER.png';
 import GRANDMASTER from './images/GRANDMASTER.png';
 import CHALLENGER from './images/CHALLENGER.png';
 import { useParams } from 'react-router-dom';
+import { type } from 'express/lib/response';
 const config = require('./config.js');
 
 function Jugadores({ match, history }) {
@@ -28,7 +29,8 @@ function Jugadores({ match, history }) {
   const [summonerId, setId] = useState("");
   const {suNombre} = useParams();
   const {suRegion} = useParams();
-  const [estilo, setStyle] = useState("cont");
+  const [campeonId, setCampeonId] = useState("");
+  const [campeon, setChamp] = useState("cont");
 
   const elnombre = {suNombre}.suNombre;
   const laregion = {suRegion}.suRegion;
@@ -59,10 +61,8 @@ function Jugadores({ match, history }) {
   function cambio(ide){
     switch(ide){
       case "false":
-          console.log(ide);
           return "#f93034";
       case "true":
-          console.log(ide);
           return "lightblue";
   }
 }
@@ -99,8 +99,6 @@ function Jugadores({ match, history }) {
         .catch(function(error){
              console.log(error);
         });
-
-
         
         axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
         .then(function(response){
@@ -108,13 +106,23 @@ function Jugadores({ match, history }) {
         })
         .catch(function(error){
              console.log(error);
-        });   
-
+        });  
+        /*
+        var call3 = "http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion.json";
+        axios.get(call3).then(function(response3){
+          for(var x in response3.data.data){
+            if(response3.data.data[x].key===campeonId){
+           console.log(response3.data.data[x].name);
+           setChamp(String(response3.data.data[x].name));
+            }
+          }
+        });
+*/
         setLoading(0);
       }
       loadData();
 
-      }, [])
+      }, []);
 
       return (
         <div className="Jugadores">
@@ -137,6 +145,7 @@ function Jugadores({ match, history }) {
           <a href={`../${searchText}/${regiom}`} ><button >Buscar un jugador</button></a>
 
           </div>
+          
            {JSON.stringify(playerData) !== "{}" ? <>
            <div style={{display: 'flex', justifyContent: 'center'}}>
           
@@ -164,32 +173,38 @@ function Jugadores({ match, history }) {
            </>
            }
 
-
-               {JSON.stringify(partida) !== '"{}"' ? 
-          <>
-              {
-                   partida.map((data,participantIndex)=> 
-                    <>
-                    <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
-                   
-                    
-                    <h2>sí</h2>
-               
-                     </div>
-                    </>
-                  )
-                      
-               }
-           </>
-           :
+{partida.length !==0 ?
            <>
-             <div style={{display: 'flex', justifyContent: 'center'}} >
-             <h3>Este invocador no está en una partida</h3>
-            
-            </div>
-          
+           {
+              partida.map((partidaData,index) =>
+                <>
+                <div  style={{ display: 'grid', 'grid-template-columns' : 'repeat(5,1fr)'}}>
+
+                  {partidaData.participants.map((data,participantIndex)=> 
+                        <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
+                         <h1 >{data.summonerName}</h1><br></br>
+                    
+                         <h7>{data.profileIconId}</h7>
+
+
+                      </div>
+                     )
+                    }
+                  </div>
+           
+                </>
+              )
+                  
+           }
+           
+
+          </>
+          :
+          <>
+           <p> no esta jugando</p>
           </>
                }
+          
         
             
            {gameList.length !==0 ?
@@ -202,7 +217,7 @@ function Jugadores({ match, history }) {
                      <table class="default">
                      <h2> Partida {index +1}</h2>
                       {gameData.info.participants.map((data,participantIndex)=> 
-                      <tr style={{backgroundColor: cambio(String(data.win))}}>
+                      <tr style={{backgroundColor: cambio(String(data.win)), border: '10px solid', borderColor: `${cambio(String(data.win))}` }}>
                       <th><img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${data.championName}.png`}></img></th>  
   
                       <td width="260"><h4>{data.summonerName}</h4></td>

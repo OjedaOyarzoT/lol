@@ -84,6 +84,9 @@ const nombres = []
       console.log(error);
     });
 
+
+  
+
         }  loadData();
 
   }, [])
