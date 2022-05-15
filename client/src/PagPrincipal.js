@@ -14,6 +14,7 @@ const Auto = () => {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
+  const wrapperRef = useRef(null);
 
   useEffect(() =>{
     const campeones = [];
@@ -23,7 +24,22 @@ const Auto = () => {
       }
     })
     setOptions(campeones);
-  }, [])
+  }, []);
+
+  useEffect(() =>{
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = event => {
+    const {current: wrap} = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplay(false);
+    }
+  };
 
   const setChamp = champ => {
     setSearch(champ);
@@ -31,14 +47,14 @@ const Auto = () => {
   }
 
   return (
-    <div className="flex-container flex-column pos-rel">
+    <div ref={wrapperRef} className="flex-container flex-column pos-rel">
       <h3>Buscar Campeon</h3>
       <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeon" value={search} onChange={event => setSearch(event.target.value)}></input>
       {display && (
         <div className='autoContainer'>
           {options.filter(({name}) => name.indexOf(search) > -1).map((v,i) => {
             return (
-              <div onClick={() => setChamp(v.name)} className="option" key={i}>
+              <div onClick={() => setChamp(v.id)} className="option" key={i}>
               <span>{v.name}</span>
               <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
               </div>
@@ -46,7 +62,7 @@ const Auto = () => {
           })}
         </div>
       )}
-      <a href={`./Campeon/${search}`}><button>Buscar</button></a>    
+      <a href={`./campeon/${search}`}><button>Buscar</button></a>    
     </div> 
   );
 };

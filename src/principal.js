@@ -31,6 +31,13 @@ function getContinente(region){
        return "europe";
 }
 
+function getChampionData(ChampionID){
+    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion/"+ ChampionID +".json")
+    .then(response => {
+        return response.data.data
+    }).catch(err => err);
+}
+
 app.get("/match/:summonerName/:region",async(req,res)=>{
     const summonerName = req.params.summonerName;
     const region = req.params.region;
@@ -92,6 +99,9 @@ app.get("/rank/:summonerName/:region",async(req,res)=>{
 
 });
 
-
-
-
+app.get("/champ/:championName", async(req,res)=>{
+    const championName = req.params.championName;
+    var champ = await getChampionData(championName);
+    console.log(champ)
+    res.send(champ);
+});
