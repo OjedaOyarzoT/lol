@@ -17,8 +17,10 @@ const config = require('./config.js');
 function Jugadores({ match, history }) {
   
   const apikey = config.API_KEY ;
+  
   const [gameList, setGameList] = useState([]); 
   const [loading, setLoading] = useState(0);
+  const [partida,actual] = useState([]);
   const [playerDataRank, setPlayerDataRank] = useState([]);
   const [playerData, setPlayerData] = useState([]);
   const [regiom, setRegion] = useState([]);
@@ -90,6 +92,16 @@ function Jugadores({ match, history }) {
              console.log(error);
         });
         
+        axios.get("http://localhost:4000/partida/"+elnombre+"/"+laregion)
+        .then(function(response){
+             actual(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        });
+
+
+        
         axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
         .then(function(response){
              setGameList(response.data);
@@ -151,6 +163,34 @@ function Jugadores({ match, history }) {
            
            </>
            }
+
+
+               {JSON.stringify(partida) !== '"{}"' ? 
+          <>
+              {
+                   partida.map((data,participantIndex)=> 
+                    <>
+                    <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
+                   
+                    
+                    <h2>sí</h2>
+               
+                     </div>
+                    </>
+                  )
+                      
+               }
+           </>
+           :
+           <>
+             <div style={{display: 'flex', justifyContent: 'center'}} >
+             <h3>Este invocador no está en una partida</h3>
+            
+            </div>
+          
+          </>
+               }
+        
             
            {gameList.length !==0 ?
               <>
@@ -164,8 +204,17 @@ function Jugadores({ match, history }) {
                       {gameData.info.participants.map((data,participantIndex)=> 
                       <tr style={{backgroundColor: cambio(String(data.win))}}>
                       <th><img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${data.championName}.png`}></img></th>  
-                      <td><img width="35" height="35" src={``}></img></td>
-                      <td width="260"><h4>{data.summonerName}</h4></td><td width="150"><h4>{data.kills}/{data.deaths}/{data.assists}</h4></td>
+  
+                      <td width="260"><h4>{data.summonerName}</h4></td>
+                      <td><img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item0}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item1}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item2}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item3}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item4}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item5}.png`}></img>
+                      <img width="25" height="30" alt="" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/item/${data.item6}.png`}></img>
+                      </td>
+                      <td width="150"><h4>{data.kills}/{data.deaths}/{data.assists}</h4></td>
                       <td> <img width="70" height="70" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ data.profileIcon+".png" } alt="icono"></img></td>
                       </tr>
                       
@@ -175,8 +224,9 @@ function Jugadores({ match, history }) {
                      </div>
                     </>
                   )
-    
+                      
                }
+               
     
               </>
               :
