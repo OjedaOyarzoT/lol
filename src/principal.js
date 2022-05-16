@@ -111,19 +111,3 @@ app.get("/champ/:championName", async(req,res)=>{
 });
 
 
-
-app.get("/hechizos/", async(req,res)=>{
-    call = "http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/summoner.json"
-    axios.get(call)
-      .then(function(response){
-        var arr = [];
-        console.log(response.data.data);   
-        arr.push(response.data.data); 
-        res.json(arr);
-      }).catch(function(error){
-           console.log(error);
-           res.json("{}");
-      });
-
-
-});
