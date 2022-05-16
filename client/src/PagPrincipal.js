@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import LOGO from './images/LOL_Logo.png';
 import { useParams } from 'react-router-dom';
 
 const config = require('./config.js');
@@ -48,7 +49,6 @@ const Auto = () => {
 
   return (
     <div ref={wrapperRef} className="flex-container flex-column pos-rel">
-      <h3>Buscar Campeon</h3>
       <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeon" value={search} onChange={event => setSearch(event.target.value)}></input>
       {display && (
         <div className='autoContainer'>
@@ -62,7 +62,7 @@ const Auto = () => {
           })}
         </div>
       )}
-      <a href={`./campeon/${search}`}><button>Buscar</button></a>    
+      <a href={`./campeon/${search}`}><button>Buscar Campeon</button></a>    
     </div> 
   );
 };
@@ -116,28 +116,32 @@ const nombres = []
   
 
  return(
-<div className="PagPrincipal">
-    <h1>Página principal</h1>
-    <h3>Buscar jugador</h3>
-    <input type="text" value={suNombre} onChange={e => setSummoner(e.target.value)} placeholder="suNombre"></input>
-    <select value={suRegion} onChange={e => setRegion(e.target.value)}>
-              <option value="br1">BRASIL</option>
-              <option value="kr">COREA</option>
-              <option value="eun1">EUROPA NÓRDICA Y ESTE</option>
-              <option value="euw1">EUROPA OESTE</option>
-              <option value="jp1">JAPÓN</option>
-              <option value="la1">LATINOAMÉRICA NORTE</option>
-              <option value="la2">LATINOAMÉRICA SUR</option>
-              <option value="na1">NORTEAMÉRICA</option>
-              <option value="oc1">OCEANÍA</option>
-              <option value="ru">RUSIA</option>
-              <option value="tr1">TURQUÍA</option> 
-    </select>   
-    <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar</button></a>    
-    <div>
+<div class="container">
+  <div class="row bg-primary">
+    <div class="col-2">
+      <img src={LOGO} width="50" height="50" alt="img"></img>
+    </div>
+    <div class="col-5">
+      <input type="text" value={suNombre} onChange={e => setSummoner(e.target.value)} placeholder="Nombre de Invocador"></input>
+      <select value={suRegion} onChange={e => setRegion(e.target.value)}>
+                <option value="br1">BRASIL</option>
+                <option value="kr">COREA</option>
+                <option value="eun1">EUROPA NÓRDICA Y ESTE</option>
+                <option value="euw1">EUROPA OESTE</option>
+                <option value="jp1">JAPÓN</option>
+                <option value="la1">LATINOAMÉRICA NORTE</option>
+                <option value="la2">LATINOAMÉRICA SUR</option>
+                <option value="na1">NORTEAMÉRICA</option>
+                <option value="oc1">OCEANÍA</option>
+                <option value="ru">RUSIA</option>
+                <option value="tr1">TURQUÍA</option> 
+      </select>   
+      <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar Jugador</button></a> 
+    </div>
+    <div class="col-5">
       <Auto />
     </div>
-
+  </div>
 <div>
   <h3>Rotación semanal</h3>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[0]}.png`}></img>
