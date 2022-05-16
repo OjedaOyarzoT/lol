@@ -1,3 +1,3 @@
 module.exports = {
-    API_KEY : process.env.API_KEY || 'RGAPI-bdc3e904-17b9-4dd4-8bb0-55a9239e083a',
+    API_KEY : process.env.API_KEY || 'RGAPI-f0070614-aa5b-4524-822e-59abe76864b9',
   }

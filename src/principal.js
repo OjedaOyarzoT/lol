@@ -18,7 +18,8 @@ function getPlayerID(playername,reg){
 }
 
 function getPlayerPUUID(playername,reg){
-    return axios.get("https://"+reg+".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/"+ playername+"?api_key=" + API_KEY).then(response => {
+    return axios.get("https://"+reg+".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/"+ playername+"?api_key=" + API_KEY)
+    .then(response => {
         console.log(response.data);
         return response.data.puuid
     }).catch(err => err);
@@ -34,7 +35,7 @@ function getContinente(region){
 function getChampionData(ChampionID){
     return axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion/"+ ChampionID +".json")
     .then(response => {
-        return response.data.data
+        return response.data
     }).catch(err => err);
 }
 
@@ -102,6 +103,7 @@ app.get("/rank/:summonerName/:region",async(req,res)=>{
 app.get("/champ/:championName", async(req,res)=>{
     const championName = req.params.championName;
     var champ = await getChampionData(championName);
-    console.log(champ)
-    res.send(champ);
+    var champ1 = champ.data
+    console.log(champ1)
+    res.json(champ1);
 });
