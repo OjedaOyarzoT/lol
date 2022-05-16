@@ -30,7 +30,8 @@ function Jugadores({ match, history }) {
   const {suNombre} = useParams();
   const {suRegion} = useParams();
   const [estilo, setStyle] = useState("cont");
-  const [ea, sete] = useState("");
+  const [ca, setChamps] = useState([]);
+  const [playerDataRank1, setPlayerDataRank1] = useState([]);
 
   const elnombre = {suNombre}.suNombre;
   const laregion = {suRegion}.suRegion;
@@ -107,7 +108,16 @@ function Jugadores({ match, history }) {
         })
         .catch(function(error){
              console.log(error);
-        });  
+        }); 
+        
+        axios.get("http://localhost:4000/ca/")
+        .then(function(response){
+             setChamps(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        }); 
+
 
 
         setLoading(0);
@@ -115,6 +125,21 @@ function Jugadores({ match, history }) {
       loadData();
 
       }, [])
+
+
+      function camp(championId){
+         for(var x in ca){
+              if(String(ca[x][1])==String(championId)){
+
+              return String(ca[x][0])
+          
+          }
+         }
+        
+
+      }
+
+        
 
       return (
         <div className="Jugadores">
@@ -176,12 +201,13 @@ function Jugadores({ match, history }) {
 
 
 
-                        <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
-                         <h1>{data.summonerName}</h1> 
-                         <img width="70" height="70" alt="champ" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ data.profileIconId+".png"}></img>
-                         
-        
-                      
+                      <div style={{clear: 'both', display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(1,1fr)'}}>
+                        <img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${camp(data.championId)}.png`}></img>
+                        <br></br>
+                        <h4>{data.summonerName}</h4> 
+                     
+                        
+                     
 
                       </div>
 
