@@ -3,6 +3,7 @@ var cors = require('cors')
 const axios = require('axios');
 const { response } = require('express');
 const config = require('./config.js');
+const match = require('nodemon/lib/monitor/match');
 
 var app = express();
 app.use(cors());
@@ -38,6 +39,8 @@ function getChampionData(ChampionID){
         return response.data
     }).catch(err => err);
 }
+
+
 
 app.get("/match/:summonerName/:region",async(req,res)=>{
     const summonerName = req.params.summonerName;
@@ -110,4 +113,16 @@ app.get("/champ/:championName", async(req,res)=>{
     res.json(champ1[championName]);
 });
 
+app.get("/ca/", async(req,res)=>{
 
+    
+    const todo = await axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion.json")
+    .then(response => response.data)
+    .catch(err => err)
+    var arr = [];
+    for(i in todo.data){
+           arr.push([String(todo.data[i].id),String(todo.data[i].key)]); 
+    }
+    res.json(arr);
+
+});
