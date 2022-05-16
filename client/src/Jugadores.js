@@ -31,7 +31,8 @@ function Jugadores({ match, history }) {
   const {suRegion} = useParams();
   const [estilo, setStyle] = useState("cont");
   const [ca, setChamps] = useState([]);
-  const [playerDataRank1, setPlayerDataRank1] = useState([]);
+  const [jug, setJug] = useState([]);
+
 
   const elnombre = {suNombre}.suNombre;
   const laregion = {suRegion}.suRegion;
@@ -67,6 +68,10 @@ function Jugadores({ match, history }) {
           return "lightblue";
   }
 }
+
+const [count, setCount] = useState(0);
+var arr = [];
+
 
 
   useEffect(() => {
@@ -117,9 +122,7 @@ function Jugadores({ match, history }) {
         .catch(function(error){
              console.log(error);
         }); 
-
-
-
+ 
         setLoading(0);
       }
       loadData();
@@ -135,11 +138,22 @@ function Jugadores({ match, history }) {
           
           }
          }
-        
-
       }
 
-        
+      const handleAdd = (dato) => {
+        if(count<11){  
+        arr.push(dato);
+      
+         let result = arr.filter((item,index)=>{
+           return arr.indexOf(item) === index;
+         })
+      
+         setJug(result);
+         setCount(count + 1);
+      
+        }
+       };
+  
 
       return (
         <div className="Jugadores">
@@ -201,7 +215,7 @@ function Jugadores({ match, history }) {
 
 
 
-                      <div style={{clear: 'both', display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(1,1fr)'}}>
+                      <div onLoad={handleAdd(data.summonerName)} style={{clear: 'both', display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(1,1fr)'}}>
                         <img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${camp(data.championId)}.png`}></img>
                         <br></br>
                         <h4>{data.summonerName}</h4> 
