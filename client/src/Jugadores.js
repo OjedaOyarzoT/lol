@@ -165,21 +165,30 @@ function Jugadores({ match, history }) {
            }
 
 
-               {JSON.stringify(partida) !== '"{}"' ? 
+          {partida.length !==0 ?
           <>
-              {
-                   partida.map((data,participantIndex)=> 
-                    <>
-                    <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
-                   
+               {
+              partida.map((partidaData,index) =>
+                <>
+                <div  style={{ display: 'grid', 'grid-template-columns' : 'repeat(5,1fr)'}}>
+
+                  {partidaData.participants.map((data,participantIndex)=> 
+                        <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
+                         <h1 >{data.summonerName}</h1><br></br>
                     
-                    <h2>sí</h2>
-               
-                     </div>
-                    </>
-                  )
-                      
-               }
+                         <h7>{data.profileIconId}</h7>
+
+
+                      </div>
+                     )
+                    }
+                  </div>
+           
+                </>
+              )
+                  
+           }
+           
            </>
            :
            <>
