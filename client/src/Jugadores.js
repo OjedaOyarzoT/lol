@@ -165,8 +165,8 @@ function Jugadores({ match, history }) {
            }
 
 
-          {partida.length !==0 ?
-          <>
+             {JSON.stringify(partida) !== '"{}"' ?
+                  <>
                {
               partida.map((partidaData,index) =>
                 <>
@@ -174,9 +174,9 @@ function Jugadores({ match, history }) {
 
                   {partidaData.participants.map((data,participantIndex)=> 
                         <div style={{clear: 'both', display: 'flex', justifyContent: 'center'}}>
-                         <h1 >{data.summonerName}</h1><br></br>
-                    
-                         <h7>{data.profileIconId}</h7>
+                         <h1 >{data.summonerName}</h1><br></br> 
+                         <h2>{data.championId}</h2>   
+                         <h7>{data.spell1Id}</h7> <h7>{data.spell2Id}</h7>
 
 
                       </div>
