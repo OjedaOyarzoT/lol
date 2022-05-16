@@ -26,6 +26,7 @@ function Jugadores({ match, history }) {
   const [regiom, setRegion] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [summonerId, setId] = useState("");
+  const [hechizos, setHechizos] = useState([]);
   const {suNombre} = useParams();
   const {suRegion} = useParams();
   const [estilo, setStyle] = useState("cont");
@@ -100,11 +101,18 @@ function Jugadores({ match, history }) {
              console.log(error);
         });
 
-
-        
         axios.get("http://localhost:4000/match/"+elnombre+"/"+laregion)
         .then(function(response){
              setGameList(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        });   
+
+        axios.get("http://localhost:4000/hechizos/")
+        .then(function(response){
+             setHechizos(response.data);
+             console.log(response.data[0]);
         })
         .catch(function(error){
              console.log(error);
@@ -177,8 +185,6 @@ function Jugadores({ match, history }) {
                          <h1 >{data.summonerName}</h1><br></br> 
                          <h2>{data.championId}</h2>   
                          <h7>{data.spell1Id}</h7> <h7>{data.spell2Id}</h7>
-
-
                       </div>
                      )
                     }
