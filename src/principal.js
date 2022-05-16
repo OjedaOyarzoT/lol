@@ -33,7 +33,7 @@ function getContinente(region){
 }
 
 function getChampionData(ChampionID){
-    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion/"+ ChampionID +".json")
+    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/es_MX/champion/"+ ChampionID +".json")
     .then(response => {
         return response.data
     }).catch(err => err);
@@ -107,7 +107,7 @@ app.get("/champ/:championName", async(req,res)=>{
     var champ = await getChampionData(championName);
     var champ1 = champ.data
     console.log(champ1)
-    res.json(champ1);
+    res.json(champ1[championName]);
 });
 
 
