@@ -4,6 +4,7 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LOGO from './images/LOL_Logo.png';
 import { useParams } from 'react-router-dom';
+import Tresd from './Tresd.js';
 
 const config = require('./config.js');
 const API_KEY = config.API_KEY ;

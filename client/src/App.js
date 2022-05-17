@@ -7,6 +7,7 @@ import {  BrowserRouter as Router,  Routes, Route ,hashHistory }  from "react-ro
 import PagPrincipal from "./PagPrincipal";
 import Jugadores from './Jugadores';
 import Campeones from './Campeones';
+import Tresd from './Tresd.js';
 
 function App() {
 
@@ -17,6 +18,7 @@ return (
         <Route path='/' element={<PagPrincipal/>} />
         <Route path='/jugador/:suNombre/:suRegion' element={<Jugadores/>} />
         <Route path='/campeon/:nCampeon' element={<Campeones/>} />
+        <Route path='/3d' element={<Tresd/>} />
       </Routes>
     </Router>
           
