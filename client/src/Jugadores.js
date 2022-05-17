@@ -32,6 +32,7 @@ function Jugadores({ match, history }) {
   const [estilo, setStyle] = useState("cont");
   const [ca, setChamps] = useState([]);
   const [jug, setJug] = useState([]);
+  const [mastery, setMastery] = useState([]);
 
 
   const elnombre = {suNombre}.suNombre;
@@ -122,7 +123,23 @@ var arr = [];
         .catch(function(error){
              console.log(error);
         }); 
- 
+        
+        
+        
+       if(jug.length>1){
+        for(var i in jug){
+        var call4= "https://"+laregion+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+jug[i]+"?api_key="+apikey;
+        axios.get(call4).then(function(response){
+          setMastery(response.data)    
+         })
+         .catch(function(error){
+          console.log(error);
+          
+        });
+      }
+      }
+      
+
         setLoading(0);
       }
       loadData();
@@ -153,6 +170,8 @@ var arr = [];
       
         }
        };
+
+
   
 
       return (
@@ -215,7 +234,7 @@ var arr = [];
 
 
 
-                      <div onLoad={handleAdd(data.summonerName)} style={{clear: 'both', display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(1,1fr)'}}>
+                      <div onLoad={handleAdd(data.summonerId)} style={{clear: 'both', display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(1,1fr)'}}>
                         <img width="70" height="70" alt="champ" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${camp(data.championId)}.png`}></img>
                         <br></br>
                         <h4>{data.summonerName}</h4> 
