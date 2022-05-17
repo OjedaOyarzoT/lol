@@ -138,10 +138,10 @@ const Dinosaur = () => {
 export default function tresd() {
   return (
     <div style={{ width: "100%", margin: "0 auto" }}>
-      <p>Click para mover</p>
-      <p>
+      <h1>Click para mover</h1>
+      <h2>
         Modelo 3d.
-      </p>
+      </h2>
       <Dinosaur />
     </div>
   );
