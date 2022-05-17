@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 function Campeones() {
 
     const Dato = () =>{
-        const [loading, setLoading] = useState(0);
         const [infor, setInfor] = useState([]);
         const [pasiva, setPasiva] = useState([]);
         const [pimg, setPimg] = useState([]);
@@ -24,8 +23,6 @@ function Campeones() {
         console.log({nCampeon}.nCampeon);
 
         useEffect(() => {
-            async function loadData() {
-                setLoading(1);
     
             axios.get("http://localhost:4000/champ/"+campeonId)
             .then(function(response){
@@ -45,9 +42,6 @@ function Campeones() {
             .catch(function(error){
                 console.log(error);
            });
-             setLoading(0);
-            }
-            loadData();
         }, [])
 
         return (
