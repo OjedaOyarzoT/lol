@@ -49,7 +49,7 @@ const Auto = () => {
 
   return (
     <div ref={wrapperRef} className="flex-container flex-column pos-rel">
-      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeon" value={search} onChange={event => setSearch(event.target.value)}></input>
+      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeón" value={search} onChange={event => setSearch(event.target.value)}></input>
       {display && (
         <div className='autoContainer'>
           {options.filter(({name}) => name.indexOf(search) > -1).map((v,i) => {
@@ -62,7 +62,7 @@ const Auto = () => {
           })}
         </div>
       )}
-      <a href={`./campeon/${search}`}><button>Buscar Campeon</button></a>    
+      <a href={`./campeon/${search}`}><button>Buscar Campeón</button></a>    
     </div> 
   );
 };
