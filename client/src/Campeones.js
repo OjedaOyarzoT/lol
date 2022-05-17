@@ -111,6 +111,7 @@ function Campeones() {
 
     return (
     <div class="lul">
+        <a href="../"><button>Volver</button></a>
         <div class="container">
             <Dato />
         </div>

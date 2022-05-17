@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LOGO from './images/LOL_Logo.png';
+import BG from './images/bg.jpg';
 import { useParams } from 'react-router-dom';
 
 
@@ -50,13 +51,13 @@ const Auto = () => {
 
   return (
     <div ref={wrapperRef} className="flex-container flex-column pos-rel">
-      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeón" value={search} onChange={event => setSearch(event.target.value)}></input>
+      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeón" value={search} onChange={event => setSearch(event.target.value)} size="17"></input>
       {display && (
         <div className='autoContainer'>
           {options.filter(({name}) => name.indexOf(search) > -1).map((v,i) => {
             return (
               <div onClick={() => setChamp(v.id)} className="option" key={i}>
-              <span>{v.name}</span>
+              <span class="text-white">{v.name}</span>
               <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
               </div>
             )
@@ -117,13 +118,15 @@ const nombres = []
   
 
  return(
+<div class="lul">
 <div class="container">
-  <div class="row bg-primary">
-    <div class="col-2">
+<div class="masthead" style={{backgroundImage: `url(${BG})`}}></div>
+  <div class="row camp">
+    <div class="col-1">
       <img src={LOGO} width="50" height="50" alt="img"></img>
     </div>
-    <div class="col-5">
-      <input type="text" value={suNombre} onChange={e => setSummoner(e.target.value)} placeholder="Nombre de Invocador"></input>
+    <div class="col-6">
+      <input type="text" value={suNombre} onChange={e => setSummoner(e.target.value)} placeholder="Nombre de Invocador" size="17"></input>
       <select value={suRegion} onChange={e => setRegion(e.target.value)}>
                 <option value="br1">BRASIL</option>
                 <option value="kr">COREA</option>
@@ -142,9 +145,9 @@ const nombres = []
     <div class="col-5">
       <Auto />
     </div>
-  </div>
+  
 <div>
-  <h3>Rotación semanal</h3>
+  <h3 class="text-white">Rotación semanal</h3>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[0]}.png`}></img>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[1]}.png`}></img>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[2]}.png`}></img>
@@ -160,12 +163,15 @@ const nombres = []
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[12]}.png`}></img>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[13]}.png`}></img>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[14]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img>
+<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img><br></br>
+<a href={'./3d'}><button> ???????????</button></a>
+</div>
 </div>
 
-<a href={'./3d'}><button> ???????????</button></a>
 
 
+
+</div>
 </div>
 
       );
