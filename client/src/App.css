@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.masthead {
+  filter: brightness(30%);
+  background-size: cover;
+  min-height: 100vh;
+}
+.lul {
+  background-color: black;
+}
+
+.camp {
+  position: absolute;
+  top: 0;
+  left: 2;
+  z-index: 10;
+}
+
