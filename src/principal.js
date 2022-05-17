@@ -41,7 +41,6 @@ function getChampionData(ChampionID){
 }
 
 
-
 app.get("/match/:summonerName/:region",async(req,res)=>{
     const summonerName = req.params.summonerName;
     const region = req.params.region;
@@ -93,7 +92,7 @@ app.get("/rank/:summonerName/:region",async(req,res)=>{
     idJugador.then(function(result) {
         const RANKEDINFO = axios.get("https://"+region+".api.riotgames.com/lol/league/v4/entries/by-summoner/"+result+"?api_key="+API_KEY)
         .then(function(response){
-          console.log(response.data[0]);
+          console.log(response.data);
           response.data[0].winrate = ((response.data[0].wins/(response.data[0].wins+response.data[0].losses))*100).toFixed(1)
           res.json(response.data[0]);
         }).catch(function(error){
@@ -115,7 +114,6 @@ app.get("/champ/:championName", async(req,res)=>{
 
 app.get("/ca/", async(req,res)=>{
 
-    
     const todo = await axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion.json")
     .then(response => response.data)
     .catch(err => err)
