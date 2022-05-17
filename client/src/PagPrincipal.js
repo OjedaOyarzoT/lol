@@ -4,7 +4,7 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LOGO from './images/LOL_Logo.png';
 import { useParams } from 'react-router-dom';
-import Tresd from './Tresd.js';
+
 
 const config = require('./config.js');
 const API_KEY = config.API_KEY ;
@@ -137,7 +137,7 @@ const nombres = []
                 <option value="ru">RUSIA</option>
                 <option value="tr1">TURQUÍA</option> 
       </select>   
-      <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar Jugador</button></a> 
+      <a href={`./jugador/${suNombre}/${suRegion}`}><button>Buscar Jugador</button></a>  
     </div>
     <div class="col-5">
       <Auto />
@@ -162,6 +162,8 @@ const nombres = []
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[14]}.png`}></img>
 <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img>
 </div>
+
+<a href={'./3d'}><button> ???????????</button></a>
 
 
 </div>
