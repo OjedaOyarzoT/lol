@@ -3,7 +3,7 @@
 import './App.css';
 //import React from 'react';
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {  BrowserRouter as Router,  Routes, Route ,hashHistory }  from "react-router-dom";
+import {  BrowserRouter as Router,  Routes, Route }  from "react-router-dom";
 import PagPrincipal from "./PagPrincipal";
 import Jugadores from './Jugadores';
 import Campeones from './Campeones';
