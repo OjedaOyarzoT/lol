@@ -2,9 +2,7 @@
   "main": "principal.js",
   "proxy": "http://127.0.0.1:4000/",
   "scripts": {
-    "start:dev": "nodemon src/principal.js",
-    "start:champ": "nodemon src/champions.js",
-    "start:summ": "nodemon src/summoners.js"
+    "start": "nodemon src/principal.js"
   },
   "dependencies": {
     "add": "^2.0.6",

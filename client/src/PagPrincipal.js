@@ -68,6 +68,78 @@ const Auto = () => {
     </div> 
   );
 };
+
+const Auto2 = () => {
+  const [regi, setRegi] = useState("");
+  const [inv, setInv] = useState("");
+  const [display, setDisplay] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [search, setSearch] = useState("");
+  const wrapperRef = useRef(null);
+
+  useEffect(() =>{
+    const campeones = [];
+    axios.get(call2).then(function(response3){
+      for(var x in response3.data.data){
+        campeones.push(response3.data.data[x]);
+      }
+    })
+    setOptions(campeones);
+  }, []);
+
+  useEffect(() =>{
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = event => {
+    const {current: wrap} = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplay(false);
+    }
+  };
+
+  const setChamp = champ => {
+    setSearch(champ);
+    setDisplay(false);
+  }
+
+  return (
+    <div ref={wrapperRef} className="flex-container flex-column pos-rel">
+      <input type="text" value={inv} onChange={e => setInv(e.target.value)} placeholder="Nombre de Invocador" size="17"></input>
+      <select value={regi} onChange={e => setRegi(e.target.value)}>
+                <option value="br1">BRASIL</option>
+                <option value="kr">COREA</option>
+                <option value="eun1">EUROPA NÓRDICA Y ESTE</option>
+                <option value="euw1">EUROPA OESTE</option>
+                <option value="jp1">JAPÓN</option>
+                <option value="la1">LATINOAMÉRICA NORTE</option>
+                <option value="la2">LATINOAMÉRICA SUR</option>
+                <option value="na1">NORTEAMÉRICA</option>
+                <option value="oc1">OCEANÍA</option>
+                <option value="ru">RUSIA</option>
+                <option value="tr1">TURQUÍA</option> 
+      </select>   
+      <input id="auto" onKeyDown={() => setDisplay(true)} placeholder="Nombre del Campeón" value={search} onChange={event => setSearch(event.target.value)} size="17"></input>
+      {display && (
+        <div className='autoContainer'>
+          {options.filter(({name}) => name.indexOf(search) > -1).map((v,i) => {
+            return (
+              <div onClick={() => setChamp(v.id)} className="option" key={i}>
+              <span class="text-white">{v.name}</span>
+              <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      <a href={`./cofre/${inv}/${regi}/${search}`}><button>Buscar</button></a>    
+    </div> 
+  );
+};
   
 function PagPrincipal({ history }) {    
 
@@ -146,25 +218,29 @@ const nombres = []
       <Auto />
     </div>
   
-<div>
+<div class="col-4">
   <h3 class="text-white">Rotación semanal</h3>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[0]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[1]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[2]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[3]}.png`}></img><br></br>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[4]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[5]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[6]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[7]}.png`}></img><br></br>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[8]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[9]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[10]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[11]}.png`}></img><br></br>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[12]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[13]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[14]}.png`}></img>
-<img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img><br></br>
-<a href={'./3d'}><button> ???????????</button></a>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[0]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[1]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[2]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[3]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[4]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[5]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[6]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[7]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[8]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[9]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[10]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[11]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[12]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[13]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[14]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img><br></br>
+  <a href={'./3d'}><button> ???????????</button></a>
+</div>
+<div class="col-8">
+  <h3 class="text-white">Cofre disponible?</h3>
+  <Auto2 />
 </div>
 </div>
 
