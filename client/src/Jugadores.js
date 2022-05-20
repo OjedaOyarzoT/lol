@@ -26,10 +26,8 @@ function Jugadores({ match, history }) {
   const [regiom, setRegion] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [summonerId, setId] = useState("");
-  const [hechizos, setHechizos] = useState([]);
   const {suNombre} = useParams();
   const {suRegion} = useParams();
-  const [estilo, setStyle] = useState("cont");
   const [ca, setChamps] = useState([]);
   const [jug, setJug] = useState([]);
   const [mastery, setMastery] = useState([]);
@@ -72,8 +70,6 @@ function Jugadores({ match, history }) {
 
 const [count, setCount] = useState(0);
 var arr = [];
-
-
 
   useEffect(() => {
 
@@ -123,7 +119,14 @@ var arr = [];
         .catch(function(error){
              console.log(error);
         }); 
-        
+
+        axios.get("http://localhost:4000/mastery/"+elnombre+"/"+laregion)
+        .then(function(response){
+             setMastery(response.data);
+        })
+        .catch(function(error){
+             console.log(error);
+        }); 
         
         
        if(jug.length>1){
@@ -138,7 +141,6 @@ var arr = [];
         });
       }
       }
-      
 
         setLoading(0);
       }
@@ -195,8 +197,12 @@ var arr = [];
           <a href={`../${searchText}/${regiom}`} ><button >Buscar un jugador</button></a>
 
           </div>
+
+
+          <div style={{display: 'flex', justifyContent: 'center', display: 'grid', 'grid-template-columns' : 'repeat(2,1fr)'}}>
+          
            {JSON.stringify(playerData) !== "{}" ? <>
-           <div style={{display: 'flex', justifyContent: 'center'}}>
+           <div style={{display: 'flex', justifyContent: 'right'}}>
           
            <img width="140" height="140" src={"http://ddragon.leagueoflegends.com/cdn/12.8.1/img/profileicon/"+ playerData.profileIconId+".png" } alt="no has buscado jugador"></img>
            <p><h1> {playerData.name}</h1><h5> Nivel {playerData.summonerLevel}</h5> </p>    
@@ -211,16 +217,16 @@ var arr = [];
            </>
            :
            <>
-             <div style={{display: 'flex', justifyContent: 'center'}} >
+             <div style={{display: 'flex', justifyContent: 'left'}}>
           <img height="140" width="140" src={elo(playerDataRank.tier)} alt="no rankea"></img>
                 <p><h3>{playerDataRank.tier} {playerDataRank.rank}  {playerDataRank.leaguePoints} PL</h3>
                 <h5>Winrate : {playerDataRank.winrate} % </h5>
                 </p>
-                </div>
-
-           
+                </div>           
            </>
            }
+            </div>
+
 
 
              {JSON.stringify(partida) !== '"{}"' ?

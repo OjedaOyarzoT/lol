@@ -67,7 +67,6 @@ app.get("/match/:summonerName/:region",async(req,res)=>{
            .catch(err => err)
         matchDataArray.push(matchData);
     }
-
     res.json(matchDataArray);
 });
 
@@ -125,6 +124,7 @@ app.get("/ca/", async(req,res)=>{
     .then(response => response.data)
     .catch(err => err)
     var arr = [];
+
     for(i in todo.data){
            arr.push([String(todo.data[i].id),String(todo.data[i].key)]); 
     }
@@ -146,3 +146,56 @@ app.get("/cofre/:ser/:idinv/:champkey", async(req,res)=>{
     var myCofre = await getCofre(ser,idinv,champkey)
     res.send(myCofre)
 })
+app.get("/mastery/:summonerName/:region", async(req,res)=>{
+   const summonerName = req.params.summonerName;
+   const region = req.params.region;
+   let idJugador = await getPlayerID(summonerName,region);
+   const PUUID = await getPlayerPUUID(summonerName,region);
+   const sucontinente = getContinente(region);
+   axios.get("https://"+region+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+idJugador+"?api_key="+API_KEY
+   ).then(function(response){
+       arr2 = [];
+       arr2.push(response.data[0]);
+       arr2.push(response.data[1]);
+       arr2.push(response.data[2]);      
+       res.json(arr);
+  }).catch(function(error){
+       console.log(error);
+       res.json("{}");
+  });
+
+});
+
+app.get("/cien/:summonerName/:region",async(req,res)=>{
+    const summonerName = req.params.summonerName;
+    const region = req.params.region;
+    const PUUID = await getPlayerPUUID(summonerName,region);
+    const sucontinente = getContinente(region);
+    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=5&api_key=" + API_KEY;
+    const gameIDs = await axios.get(API_CALL)
+   .then(response => response.data)
+        .catch(err => err)
+
+    var matchDataArray = [];
+    for(var i = 0; i < gameIDs.length; i++){
+        const matchID = gameIDs[i];
+        const matchData = await axios.get("https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
+        .then(response => response.data.info.participants)
+           .catch(err => err)
+        matchDataArray.push(matchData);
+    }
+
+
+
+    for(j=0;j<10;j++){
+        if(matchDataArray[1][j].summonerName===summonerName){
+              console.log(matchDataArray[i][j]);
+              res.send(matchDataArray[i][j]);
+
+}
+
+}
+
+});
+
+
