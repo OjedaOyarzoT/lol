@@ -7,7 +7,8 @@ import {  BrowserRouter as Router,  Routes, Route }  from "react-router-dom";
 import PagPrincipal from "./PagPrincipal";
 import Jugadores from './Jugadores';
 import Campeones from './Campeones';
-import Tresd from './Tresd.js';
+import Tresd from './Tresd';
+import Cofres from './Cofres';
 
 function App() {
 
@@ -19,6 +20,7 @@ return (
         <Route path='/jugador/:suNombre/:suRegion' element={<Jugadores/>} />
         <Route path='/campeon/:nCampeon' element={<Campeones/>} />
         <Route path='/3d' element={<Tresd/>} />
+        <Route path='/cofre/:inv/:region/:search' element={<Cofres/>} />
       </Routes>
     </Router>
           

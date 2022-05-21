@@ -40,6 +40,13 @@ function getChampionData(ChampionID){
     }).catch(err => err);
 }
 
+function getCofre(Server,NameId,ChampionKey){
+    return axios.get("https://"+Server+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+NameId+"/by-champion/"+ChampionKey+"?api_key="+API_KEY)
+    .then(response => {
+        return response.data
+    })
+}
+
 
 app.get("/match/:summonerName/:region",async(req,res)=>{
     const summonerName = req.params.summonerName;
@@ -125,6 +132,20 @@ app.get("/ca/", async(req,res)=>{
 
 });
 
+app.get("/id/:invid/:regio", async(req,res)=>{
+    const invid = req.params.invid;
+    const regio = req.params.regio;
+    var myId = await getPlayerID(invid,regio);
+    res.send(myId)
+});
+
+app.get("/cofre/:ser/:idinv/:champkey", async(req,res)=>{
+    const ser = req.params.ser;
+    const idinv = req.params.idinv;
+    const champkey = req.params.champkey;
+    var myCofre = await getCofre(ser,idinv,champkey)
+    res.send(myCofre)
+})
 app.get("/mastery/:summonerName/:region", async(req,res)=>{
    const summonerName = req.params.summonerName;
    const region = req.params.region;
