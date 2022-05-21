@@ -146,9 +146,9 @@ app.get("/mastery/:summonerName/:region", async(req,res)=>{
 });
 
 app.get("/cien/:summonerName/:region",async(req,res)=>{
-    const summonerName = req.params.summonerName;
+    const summonerN = req.params.summonerName;
     const region = req.params.region;
-    const PUUID = await getPlayerPUUID(summonerName,region);
+    const PUUID = await getPlayerPUUID(summonerN,region);
     const sucontinente = getContinente(region);
     API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=5&api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
@@ -156,24 +156,18 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
         .catch(err => err)
 
     var matchDataArray = [];
+    var arro = [];
     for(var i = 0; i < gameIDs.length; i++){
         const matchID = gameIDs[i];
         const matchData = await axios.get("https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
-        .then(response => response.data.info.participants)
+        .then(response => response.data.info.participants.find(participant => participant.puuid==PUUID)
+        
+        )
            .catch(err => err)
         matchDataArray.push(matchData);
     }
+    res.json(matchDataArray);
 
-
-
-    for(j=0;j<10;j++){
-        if(matchDataArray[1][j].summonerName===summonerName){
-              console.log(matchDataArray[i][j]);
-              res.send(matchDataArray[i][j]);
-
-}
-
-}
 
 });
 
