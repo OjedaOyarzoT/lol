@@ -182,15 +182,26 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
         const matchID = gameIDs[i];
         const matchData = await axios.get("https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
         .then(function(response){
-            arro = response.data.info.participants.find(participant => participant.puuid==PUUID)
+            arro.push(response.data.info.participants.find(participant => participant.puuid==PUUID).championName)
         }).catch(err => err)
-        //matchDataArray.push(matchData);
     }
-    
-    for(var c=0;c<arro.length;c++){
-        arro.push(arro[c].championName);
+    arro.sort();
+
+    let elementos = [];
+    let vecesrepetidas = [];
+    let contador = 1;
+
+    for(let i=0;i < arro.length;i++){
+        if(arro[i+1] === arro[i]){
+            contador++;
+        }else{
+            elementos.push(arro[i]);
+            vecesrepetidas.push(contador);
+            contador = 1 ;
+        }
     }
 
+   
     res.json(matchDataArray);
 
 
