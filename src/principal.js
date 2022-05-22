@@ -171,7 +171,7 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
     const region = req.params.region;
     const PUUID = await getPlayerPUUID(summonerN,region);
     const sucontinente = getContinente(region);
-    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=5&api_key=" + API_KEY;
+    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=50&api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
    .then(response => response.data)
         .catch(err => err)
@@ -181,12 +181,16 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
     for(var i = 0; i < gameIDs.length; i++){
         const matchID = gameIDs[i];
         const matchData = await axios.get("https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
-        .then(response => response.data.info.participants.find(participant => participant.puuid==PUUID)
-        
-        )
-           .catch(err => err)
-        matchDataArray.push(matchData);
+        .then(function(response){
+            arro = response.data.info.participants.find(participant => participant.puuid==PUUID)
+        }).catch(err => err)
+        //matchDataArray.push(matchData);
     }
+    
+    for(var c=0;c<arro.length;c++){
+        arro.push(arro[c].championName);
+    }
+
     res.json(matchDataArray);
 
 
