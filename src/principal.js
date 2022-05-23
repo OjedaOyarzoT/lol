@@ -4,6 +4,7 @@ const axios = require('axios');
 const { response } = require('express');
 const config = require('./config.js');
 const match = require('nodemon/lib/monitor/match');
+const { DataTexture2DArray } = require('three');
 
 var app = express();
 app.use(cors());
@@ -171,18 +172,21 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
     const region = req.params.region;
     const PUUID = await getPlayerPUUID(summonerN,region);
     const sucontinente = getContinente(region);
-    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=50&api_key=" + API_KEY;
+    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=5&api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
    .then(response => response.data)
         .catch(err => err)
 
     var matchDataArray = [];
     var arro = [];
+    var inf = [];
     for(var i = 0; i < gameIDs.length; i++){
         const matchID = gameIDs[i];
         const matchData = await axios.get("https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/"+ matchID+"?api_key="+API_KEY)
         .then(function(response){
             arro.push(response.data.info.participants.find(participant => participant.puuid==PUUID).championName)
+            inf.push([response.data.info.participants.find(participant => participant.puuid==PUUID).championName,
+                     response.data.info.participants.find(participant => participant.puuid==PUUID).win]);
         }).catch(err => err)
     }
     arro.sort();
@@ -195,16 +199,51 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
         if(arro[i+1] === arro[i]){
             contador++;
         }else{
-            elementos.push(arro[i]);
+            elementos.push([contador,arro[i]]);
             vecesrepetidas.push(contador);
             contador = 1 ;
         }
     }
-
+    
+    elementos.sort();
+    elementos.reverse();
+    primero = [];
+    segundo = [];
+    tercero = [];
+    var d1=0;var d2=0;var d3=0;
+    var t1=0;var t2=0;var t3=0;
+ 
+for(var x=0;x<5;x++){
+    if(elementos[0][1]===inf[x][0]){
+        if(inf[x][1]===true){
+            t1 = t1 + 1;
+        }else{
+            d1 = d1 + 1;
+        }    
+    }
+    if(elementos[1][1]===inf[x][0]){
+        if(inf[x][1]===true){
+            t2 = t2 + 1;
+        }else{
+            d2 = d2 + 1;
+        }    
+    }
+    if(elementos[2][1]===inf[x][0]){
+        if(inf[x][1]===true){
+            t3 = t3 + 1;
+        }else{
+            d3 = d3 + 1;
+        }    
+    }
+}   
+primero = [t1,d1];
+segundo = [t2,d2];
+tercero = [t3,d3];
+console.log(primero);
+console.log(segundo);
+console.log(tercero);
    
-    res.json(matchDataArray);
-
-
+    res.json([elementos,inf]);
 });
 
 
