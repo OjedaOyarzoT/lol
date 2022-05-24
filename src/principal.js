@@ -159,7 +159,7 @@ app.get("/mastery/:summonerName/:region", async(req,res)=>{
        arr2.push(response.data[0]);
        arr2.push(response.data[1]);
        arr2.push(response.data[2]);      
-       res.json(arr);
+       res.json(arr2);
   }).catch(function(error){
        console.log(error);
        res.json("{}");
@@ -172,7 +172,7 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
     const region = req.params.region;
     const PUUID = await getPlayerPUUID(summonerN,region);
     const sucontinente = getContinente(region);
-    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=5&api_key=" + API_KEY;
+    API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=100&api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
    .then(response => response.data)
         .catch(err => err)
@@ -207,43 +207,35 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
     
     elementos.sort();
     elementos.reverse();
-    primero = [];
-    segundo = [];
-    tercero = [];
     var d1=0;var d2=0;var d3=0;
-    var t1=0;var t2=0;var t3=0;
+    var v1=0;var v2=0;var v3=0;
  
-for(var x=0;x<5;x++){
+for(var x=0;x<inf.length;x++){
     if(elementos[0][1]===inf[x][0]){
         if(inf[x][1]===true){
-            t1 = t1 + 1;
+            v1 = v1 + 1;
         }else{
             d1 = d1 + 1;
         }    
     }
     if(elementos[1][1]===inf[x][0]){
         if(inf[x][1]===true){
-            t2 = t2 + 1;
+            v2 = v2 + 1;
         }else{
             d2 = d2 + 1;
         }    
     }
     if(elementos[2][1]===inf[x][0]){
         if(inf[x][1]===true){
-            t3 = t3 + 1;
+            v3 = v3 + 1;
         }else{
             d3 = d3 + 1;
         }    
     }
 }   
-primero = [t1,d1];
-segundo = [t2,d2];
-tercero = [t3,d3];
-console.log(primero);
-console.log(segundo);
-console.log(tercero);
-   
-    res.json([elementos,inf]);
+    console.log(elementos[0][1]);
+    res.send([['uno','dos','tres'],
+        [(((v1/(v1+d1))*100).toFixed(1)),(((v2/(v2+d2))*100).toFixed(1)),(((v3/(v3+d3))*100).toFixed(1))]]);
 });
 
 

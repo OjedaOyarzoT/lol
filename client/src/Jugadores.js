@@ -12,6 +12,8 @@ import MASTER from './images/MASTER.png';
 import GRANDMASTER from './images/GRANDMASTER.png';
 import CHALLENGER from './images/CHALLENGER.png';
 import { useParams } from 'react-router-dom';
+import { BooleanKeyframeTrack } from 'three';
+import {Bar} from 'react-chartjs-2';
 const config = require('./config.js');
 
 function Jugadores({ match, history }) {
@@ -31,6 +33,10 @@ function Jugadores({ match, history }) {
   const [ca, setChamps] = useState([]);
   const [jug, setJug] = useState([]);
   const [mastery, setMastery] = useState([]);
+  const [opciones, setOpciones] = useState([]);
+  const [datos, setData] = useState([]);
+  const [count, setCount] = useState(0);
+  var arr = [];
 
 
   const elnombre = {suNombre}.suNombre;
@@ -66,10 +72,29 @@ function Jugadores({ match, history }) {
       case "true":
           return "lightblue";
   }
-}
+  } 
+  function camp(championId){
+    for(var x in ca){
+         if(String(ca[x][1])==String(championId)){
 
-const [count, setCount] = useState(0);
-var arr = [];
+         return String(ca[x][0])
+     
+     }
+    }
+  }
+  const handleAdd = (dato) => {
+   if(count<11){  
+   arr.push(dato);
+ 
+    let result = arr.filter((item,index)=>{
+      return arr.indexOf(item) === index;
+    })
+ 
+    setJug(result);
+    setCount(count + 1);
+ 
+   }
+  };
 
   useEffect(() => {
 
@@ -142,39 +167,41 @@ var arr = [];
       }
       }
 
+      axios.get("http://localhost:4000/cien/"+elnombre+"/"+laregion)
+        .then(function(response){
+             const data = {
+              labels : response.data[0],
+              datasets :[{
+                label: 'winrate 3 champs mas usados',
+                backgroundColor : 'rgba(0,255,0,1)',
+                borderColor : 'black',
+                borderWidth : 2,
+                hoverBackgroundColor : 'rgba(0,255,0,0.2)',
+                hoverBorderColor : '#FF0000',
+                data : response.data[1]
+              }]
+         };
+         const opc = {
+           maintainAspectRatio : false,
+           responsive : true
+         }
+         setOpciones(opc);
+         setData(data);
+         console.log(response.data);
+         console.log(response.data[0]);
+        })
+        .catch(function(error){
+             console.log(error);
+        }); 
+
         setLoading(0);
       }
       loadData();
 
       }, [])
 
-
-      function camp(championId){
-         for(var x in ca){
-              if(String(ca[x][1])==String(championId)){
-
-              return String(ca[x][0])
-          
-          }
-         }
-      }
-
-      const handleAdd = (dato) => {
-        if(count<11){  
-        arr.push(dato);
-      
-         let result = arr.filter((item,index)=>{
-           return arr.indexOf(item) === index;
-         })
-      
-         setJug(result);
-         setCount(count + 1);
-      
-        }
-       };
-
-
-  
+     
+     
 
       return (
         <div className="Jugadores">
@@ -273,6 +300,8 @@ var arr = [];
           </>
                }
         
+
+
             
            {gameList.length !==0 ?
               <>
