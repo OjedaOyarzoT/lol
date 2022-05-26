@@ -7,9 +7,13 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.27.2",
+    "chart.js": "^3.7.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "nodemon": "^2.0.16",
+    "plotly.js": "^2.12.1",
+    "react-chartjs-2": "^4.1.0",
+    "react-plotly.js": "^2.5.1",
     "react-router": "^6.3.0",
     "react-router-dom": "^5.3.1",
     "require": "^0.4.4",

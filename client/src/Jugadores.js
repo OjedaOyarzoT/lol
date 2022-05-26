@@ -13,7 +13,12 @@ import GRANDMASTER from './images/GRANDMASTER.png';
 import CHALLENGER from './images/CHALLENGER.png';
 import { useParams } from 'react-router-dom';
 import { BooleanKeyframeTrack } from 'three';
-import {Bar} from 'react-chartjs-2';
+import {
+  Chart
+} from 'chart.js';
+import { Bar } from "react-chartjs-2";
+import Plot from "react-plotly.js";
+
 const config = require('./config.js');
 
 function Jugadores({ match, history }) {
@@ -33,7 +38,7 @@ function Jugadores({ match, history }) {
   const [ca, setChamps] = useState([]);
   const [jug, setJug] = useState([]);
   const [mastery, setMastery] = useState([]);
-  const [opciones, setOpciones] = useState([]);
+  const [lbl, setLabels] = useState([]);
   const [datos, setData] = useState([]);
   const [count, setCount] = useState(0);
   var arr = [];
@@ -95,6 +100,7 @@ function Jugadores({ match, history }) {
  
    }
   };
+
 
   useEffect(() => {
 
@@ -169,29 +175,11 @@ function Jugadores({ match, history }) {
 
       axios.get("http://localhost:4000/cien/"+elnombre+"/"+laregion)
         .then(function(response){
-             const data = {
-              labels : response.data[0],
-              datasets :[{
-                label: 'winrate 3 champs mas usados',
-                backgroundColor : 'rgba(0,255,0,1)',
-                borderColor : 'black',
-                borderWidth : 2,
-                hoverBackgroundColor : 'rgba(0,255,0,0.2)',
-                hoverBorderColor : '#FF0000',
-                data : response.data[1]
-              }]
-         };
-         const opc = {
-           maintainAspectRatio : false,
-           responsive : true
-         }
-         setOpciones(opc);
-         setData(data);
-         console.log(response.data);
-         console.log(response.data[0]);
+                setLabels([response.data[0][0][response.data[0][0].length - 1],response.data[0][1][response.data[0][1].length - 1],response.data[0][2][response.data[0][2].length - 1]]);
+                setData(response.data[1]);
         })
         .catch(function(error){
-             console.log(error);
+                console.log(error);
         }); 
 
         setLoading(0);
@@ -200,11 +188,18 @@ function Jugadores({ match, history }) {
 
       }, [])
 
-     
-     
 
+      
       return (
         <div className="Jugadores">
+        <div>
+        <Plot
+           data={[
+                { type: "bar", x: lbl, y: datos },
+                ]}
+           layout={{ width: 640, height: 480, title: "Graph Example" }}
+        />
+        </div>
           <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
           <select onChange={e => setRegion(e.target.value)}>
 

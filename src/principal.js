@@ -205,8 +205,9 @@ app.get("/cien/:summonerName/:region",async(req,res)=>{
         }
     }
     
-    elementos.sort();
-    elementos.reverse();
+    elementos = elementos.sort();
+    elementos = elementos.reverse();
+    console.log(elementos);
     var d1=0;var d2=0;var d3=0;
     var v1=0;var v2=0;var v3=0;
  
@@ -219,7 +220,7 @@ for(var x=0;x<inf.length;x++){
         }    
     }
     if(elementos[1][1]===inf[x][0]){
-        if(inf[x][1]===true){
+        if(inf[x][1]===true){ 
             v2 = v2 + 1;
         }else{
             d2 = d2 + 1;
@@ -233,9 +234,14 @@ for(var x=0;x<inf.length;x++){
         }    
     }
 }   
-    console.log(elementos[0][1]);
-    res.send([['uno','dos','tres'],
-        [(((v1/(v1+d1))*100).toFixed(1)),(((v2/(v2+d2))*100).toFixed(1)),(((v3/(v3+d3))*100).toFixed(1))]]);
+
+    const winr1 = (((v1/(v1+d1))*100).toFixed(1));
+    const winr2 = (((v2/(v2+d2))*100).toFixed(1));
+    const winr3 = (((v3/(v3+d3))*100).toFixed(1));
+    console.log([elementos[0],elementos[1],elementos[2]]);
+    console.log(elementos);
+    res.send([[elementos[0],elementos[1],elementos[2]],
+        [winr1,winr2,winr3]]);
 });
 
 
