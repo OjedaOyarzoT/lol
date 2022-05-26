@@ -9,7 +9,7 @@ const cofres = {}
 cofres.id = async(req,res)=>{
     const invid = req.params.invid;
     const regio = req.params.regio;
-    var myId = await getPlayerID(invid,regio);
+    var myId = await funciones.getPlayerID(invid,regio);
     res.send(myId)
 };
 
@@ -17,7 +17,7 @@ cofres.cofre = async(req,res)=>{
     const ser = req.params.ser;
     const idinv = req.params.idinv;
     const champkey = req.params.champkey;
-    var myCofre = await getCofre(ser,idinv,champkey)
+    var myCofre = await funciones.getCofre(ser,idinv,champkey)
     res.send(myCofre)
 };
 

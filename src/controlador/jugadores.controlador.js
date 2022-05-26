@@ -30,7 +30,7 @@ jugadores.match = async(req,res)=>{
 jugadores.partidaActual = async(req,res)=>{
     const summonerName = req.params.summonerName;
     const region = req.params.region;
-    let idJug = getPlayerID(summonerName,region);
+    let idJug = funciones.getPlayerID(summonerName,region);
 
     idJug.then(function(result) {
     const lapartida = axios.get("https://"+region+".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/"+result+"?api_key="+API_KEY)
@@ -49,7 +49,7 @@ jugadores.partidaActual = async(req,res)=>{
 jugadores.rank = async(req,res)=>{
     const summonerName = req.params.summonerName;
     const region = req.params.region;
-    let idJugador = getPlayerID(summonerName,region);
+    let idJugador = funciones.getPlayerID(summonerName,region);
    
     idJugador.then(function(result) {
         const RANKEDINFO = axios.get("https://"+region+".api.riotgames.com/lol/league/v4/entries/by-summoner/"+result+"?api_key="+API_KEY)
@@ -83,8 +83,8 @@ jugadores.campeonKey = async(req,res)=>{
 jugadores.cienPartidas = async(req,res)=>{
     const summonerN = req.params.summonerName;
     const region = req.params.region;
-    const PUUID = await getPlayerPUUID(summonerN,region);
-    const sucontinente = getContinente(region);
+    const PUUID = await funciones.getPlayerPUUID(summonerN,region);
+    const sucontinente = funciones.getContinente(region);
     API_CALL = "https://"+sucontinente+".api.riotgames.com" + "/lol/match/v5/matches/by-puuid/" + PUUID + "/ids?start=0&count=100&api_key=" + API_KEY;
     const gameIDs = await axios.get(API_CALL)
    .then(response => response.data)
@@ -160,9 +160,9 @@ for(var x=0;x<inf.length;x++){
 jugadores.mastery = async(req,res)=>{
     const summonerName = req.params.summonerName;
     const region = req.params.region;
-    let idJugador = await getPlayerID(summonerName,region);
-    const PUUID = await getPlayerPUUID(summonerName,region);
-    const sucontinente = getContinente(region);
+    let idJugador = await funciones.getPlayerID(summonerName,region);
+    const PUUID = await funciones.getPlayerPUUID(summonerName,region);
+    const sucontinente = funciones.getContinente(region);
     axios.get("https://"+region+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+idJugador+"?api_key="+API_KEY
     ).then(function(response){
         arr2 = [];
