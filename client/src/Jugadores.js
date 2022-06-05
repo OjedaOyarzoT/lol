@@ -19,6 +19,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import Plot from "react-plotly.js";
 
+
 const config = require('./config.js');
 
 function Jugadores({ match, history }) {
@@ -40,6 +41,8 @@ function Jugadores({ match, history }) {
   const [mastery, setMastery] = useState([]);
   const [lbl, setLabels] = useState([]);
   const [datos, setData] = useState([]);
+  const [lbl2, setLabels2] = useState([]);
+  const [datos2, setData2] = useState([]);
   const [count, setCount] = useState(0);
   var arr = [];
 
@@ -143,7 +146,7 @@ function Jugadores({ match, history }) {
              console.log(error);
         }); 
         
-        axios.get("http://localhost:4000/ca/")
+        axios.get("http://localhost:4000/campeonkey/")
         .then(function(response){
              setChamps(response.data);
         })
@@ -173,14 +176,17 @@ function Jugadores({ match, history }) {
       }
       }
 
-      axios.get("http://localhost:4000/cien/"+elnombre+"/"+laregion)
+      axios.get("http://localhost:4000/cienPartidas/"+elnombre+"/"+laregion)
         .then(function(response){
                 setLabels([response.data[0][0][response.data[0][0].length - 1],response.data[0][1][response.data[0][1].length - 1],response.data[0][2][response.data[0][2].length - 1]]);
                 setData(response.data[1]);
+                setLabels2([response.data[2]]);
+                setData2([response.data[3]])
         })
         .catch(function(error){
                 console.log(error);
         }); 
+
 
         setLoading(0);
       }
@@ -188,19 +194,38 @@ function Jugadores({ match, history }) {
 
       }, [])
 
-
+  
+        
+    
       
       return (
         <div className="Jugadores">
-        <div>
+        <div style={{float: 'right'}}>
+
         <Plot
            data={[
-                { type: "bar", x: lbl, y: datos },
+                { type: "bar", 
+                  x: lbl, 
+                  y: datos,
+                  marker: { color: 'rgb(23,24,25)'}
+                  },
                 ]}
-           layout={{ width: 640, height: 480, title: "Graph Example" }}
+           layout={{ width: 640, height: 480, title: "Tres campeones más jugados en las últimas 100 partidas y su winrate"}}
         />
+         <Plot
+           data={[
+                { type: "bar", 
+                  x: lbl, 
+                  y: datos,
+                  marker: { color: 'rgb(23,24,25)'}
+                  },
+                ]}
+           layout={{ width: 640, height: 480, title: "Tres roles más jugados en las últimas 100 partidas"}}
+          />
         </div>
-          <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
+    
+
+       <input type="text" onChange={e => setSearchText(e.target.value)} ></input>
           <select onChange={e => setRegion(e.target.value)}>
 
              <option value="br1">BRASIL</option>
