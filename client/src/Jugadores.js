@@ -179,9 +179,10 @@ function Jugadores({ match, history }) {
       axios.get("http://localhost:4000/cienPartidas/"+elnombre+"/"+laregion)
         .then(function(response){
                 setLabels([response.data[0][0][response.data[0][0].length - 1],response.data[0][1][response.data[0][1].length - 1],response.data[0][2][response.data[0][2].length - 1]]);
+               // setLabels(response.data[0]);
                 setData(response.data[1]);
-                setLabels2([response.data[2]]);
-                setData2([response.data[3]])
+                setLabels2(response.data[2]);
+                setData2(response.data[3])
         })
         .catch(function(error){
                 console.log(error);
@@ -210,17 +211,19 @@ function Jugadores({ match, history }) {
                   marker: { color: 'rgb(23,24,25)'}
                   },
                 ]}
-           layout={{ width: 640, height: 480, title: "Tres campeones más jugados en las últimas 100 partidas y su winrate"}}
+           layout={{ width: 640, height: 480, title: "Tres campeones más jugados en las últimas 40 partidas y su winrate"}}
         />
          <Plot
            data={[
-                { type: "bar", 
-                  x: lbl, 
-                  y: datos,
-                  marker: { color: 'rgb(23,24,25)'}
+                { type: "pie", 
+                  labels: lbl2, 
+                  values: datos2,
+                  marker: {
+                    colors: ['rgb(0, 0, 128)', 'rgb(199, 0, 57)', 'rgb(212, 172, 13)', 'rgb(29, 131, 72 )', 'rgb(120, 66, 18)', 'rgb(23, 32, 42)']
+                  }
                   },
                 ]}
-           layout={{ width: 640, height: 480, title: "Tres roles más jugados en las últimas 100 partidas"}}
+           layout={{ width: 640, height: 480, title: "Roles jugados en las últimas 40 partidas"}}
           />
         </div>
     
