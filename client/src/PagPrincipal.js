@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 const config = require('./config.js');
 const API_KEY = config.API_KEY ;
 var call = "https://la2.api.riotgames.com/lol/platform/v3/champion-rotations?api_key="+API_KEY;
-var call2 = "http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion.json";
+var call2 = "http://ddragon.leagueoflegends.com/cdn/12.11.1/data/en_US/champion.json";
 var datos = [];
 
 const Auto = () => {
@@ -58,7 +58,7 @@ const Auto = () => {
             return (
               <div onClick={() => setChamp(v.id)} className="option" key={i}>
               <span class="text-white">{v.name}</span>
-              <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
+              <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${v.id}.png`} alt="img"></img>
               </div>
             )
           })}
@@ -130,7 +130,7 @@ const Auto2 = () => {
             return (
               <div onClick={() => setChamp(v.id)} className="option" key={i}>
               <span class="text-white">{v.name}</span>
-              <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${v.id}.png`} alt="img"></img>
+              <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${v.id}.png`} alt="img"></img>
               </div>
             )
           })}
@@ -220,22 +220,22 @@ const nombres = []
   
 <div class="col-4">
   <h3 class="text-white">Rotación semanal</h3>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[0]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[1]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[2]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[3]}.png`}></img><br></br>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[4]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[5]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[6]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[7]}.png`}></img><br></br>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[8]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[9]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[10]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[11]}.png`}></img><br></br>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[12]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[13]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[14]}.png`}></img>
-  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/champion/${names[15]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[0]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[1]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[2]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[3]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[4]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[5]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[6]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[7]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[8]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[9]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[10]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[11]}.png`}></img><br></br>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[12]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[13]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[14]}.png`}></img>
+  <img width="70" height="70" alt="nada" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${names[15]}.png`}></img><br></br>
   <a href={'./3d'}><button> ???????????</button></a>
 </div>
 <div class="col-8">

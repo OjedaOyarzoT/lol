@@ -28,7 +28,7 @@ function getPlayerID(playername,reg){
 exports.getPlayerID = getPlayerID;
 
 function getChampionData(ChampionID){
-    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.9.1/data/es_MX/champion/"+ ChampionID +".json")
+    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.11.1/data/es_MX/champion/"+ ChampionID +".json")
     .then(response => {
         return response.data
     }).catch(err => err);
