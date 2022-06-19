@@ -21,7 +21,7 @@ jugadores.cienPartidas = async(req,res)=>{
     .then(response => response.data)
         .catch(err => err)
 
-    var arro1 = []; var inf = []; var rol1 = [];
+    var arro1 = []; var inf = []; var rol1 = []; var kdas = []; var kills = []; var kda3 = [];
 
     for(var i=0;i<gameIDs.length;i++){
         const matchID = gameIDs[i];
@@ -29,11 +29,15 @@ jugadores.cienPartidas = async(req,res)=>{
         .then(function(response){
             var campeon = response.data.info.participants.find(participant => participant.puuid==PUUID).championName; 
             var victoria = response.data.info.participants.find(participant => participant.puuid==PUUID).win;
+            var kda = response.data.info.participants.find(participant => participant.puuid==PUUID).challenges.kda;
+            var kill = response.data.info.participants.find(participant => participant.puuid==PUUID).kills;
             arro1.push(campeon)
             inf.push([campeon,
                     victoria]);
             rol1.push(response.data.info.participants.find(participant => participant.puuid==PUUID).teamPosition)
-
+            kdas.push(kda);
+            kills.push([campeon,kill]);
+            kda3.push([campeon,kda]);
             }).catch(err => err)
          
     }
@@ -44,19 +48,53 @@ jugadores.cienPartidas = async(req,res)=>{
         .then(function(response){
             var campeon = response.data.info.participants.find(participant => participant.puuid==PUUID).championName; 
             var victoria = response.data.info.participants.find(participant => participant.puuid==PUUID).win;
+            var kda = response.data.info.participants.find(participant => participant.puuid==PUUID).challenges.kda;
+            var kill = response.data.info.participants.find(participant => participant.puuid==PUUID).kills;
             arro1.push(campeon)
             inf.push([campeon,
                     victoria]);
             rol1.push(response.data.info.participants.find(participant => participant.puuid==PUUID).teamPosition)
+            kdas.push(kda);
+            kills.push([campeon,kill]);
+            kda3.push([campeon,kda]);
 
             }).catch(err => err)
          
     }
-
+   
+    console.log(kdas1);
     const arro = arro1.sort();
     const rol = rol1.sort();
-    let elementos = []; let roles = [];
-    let contador = 1; let contadorRol = 1;
+    let elementos = []; let roles = []; let grafkda = []; let grafkills = [];
+    let contador = 1; let contadorRol = 1; let contaor = 0; let ct = 1; let contaor2 = [];
+    let ke =kda3.sort();
+    let kills1 = kills.sort();
+    var kdas1 = [];
+    var kills2 = [];
+    for(m=0;m<ke.length;m++)
+      {
+            kdas1.push(ke[m][1]);
+            kills2.push(kills1[m][1])
+      }
+
+    for(var i=0;i < kdas1.length;i++){
+        if(arro[i+1] === arro[i]){
+            ct++;
+            contaor = contaor + kdas1[i];
+            contaor2 = contaor2 + kills2[i];
+        }else{
+            var elnum = contaor/ct;
+            var elnum2 = contaor2/ct;
+            grafkda.push([elnum,arro[i]]);
+            grafkills.push([elnum2,arro[i]]);
+            contaor = kdas1[i+1];
+            contaor2 = kills2[i+1];
+            ct =1;
+        }
+    } 
+
+    const kdagraf = grafkda.sort().reverse();
+    const killsgraf = grafkills.sort().reverse();
 
     for(let i=0;i < arro.length;i++){
         if(arro[i+1] === arro[i]){
@@ -76,27 +114,21 @@ jugadores.cienPartidas = async(req,res)=>{
             switch(rol[i]){
                 case 'BOTTOM':
                     var p = "ADC";
-                   // linea.push("ADC");
                     break;
                 case 'MIDDLE':
                     var p = "MID";
-                    //linea.push("MID");
                     break;
                 case 'TOP':
                     var p = "TOP";
-                    //linea.push("TOP");
                     break;
                 case 'UTILITY':
                     var p = "SUPP";
-                    //linea.push("SUPP");
                     break;
                 case 'JUNGLE':
                     var p = "JUNGLA";
-                   // linea.push("JUNGLA");
                     break;
                 case '':
                     var p = "Modo de juego sin roles";
-                    //linea.push("Modo de juego sin roles");
                     break;
             }
             linea.push(p);
@@ -139,7 +171,9 @@ for(var x=0;x<inf.length;x++){
     console.log(linea,cont);
     console.log([elementos1[0],elementos1[1],elementos1[2]], [winr1,winr2,winr3]);
     res.send([[elementos1[0],elementos1[1],elementos1[2]], [winr1,winr2,winr3]
-   ,linea, cont]);
+   ,linea, cont,
+   [kdagraf[0][1],kdagraf[1][1],kdagraf[2][1]],[kdagraf[0][0],kdagraf[1][0],kdagraf[2][0]],
+   [killsgraf[0][1],killsgraf[1][1],killsgraf[2][1]],[killsgraf[0][0],killsgraf[1][0],killsgraf[2][0]]]);
 };
 
 jugadores.match = async(req,res)=>{

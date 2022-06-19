@@ -43,6 +43,10 @@ function Jugadores({ match, history }) {
   const [datos, setData] = useState([]);
   const [lbl2, setLabels2] = useState([]);
   const [datos2, setData2] = useState([]);
+  const [lbl3, setLabels3] = useState([]);
+  const [datos3, setData3] = useState([]);
+  const [lbl4, setLabels4] = useState([]);
+  const [datos4, setData4] = useState([]);
   const [count, setCount] = useState(0);
   var arr = [];
 
@@ -161,8 +165,7 @@ function Jugadores({ match, history }) {
         .catch(function(error){
              console.log(error);
         }); 
-        
-        
+              
        if(jug.length>1){
         for(var i in jug){
         var call4= "https://"+laregion+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+jug[i]+"?api_key="+apikey;
@@ -179,10 +182,13 @@ function Jugadores({ match, history }) {
       axios.get("http://localhost:4000/cienPartidas/"+elnombre+"/"+laregion)
         .then(function(response){
                 setLabels([response.data[0][0][response.data[0][0].length - 1],response.data[0][1][response.data[0][1].length - 1],response.data[0][2][response.data[0][2].length - 1]]);
-               // setLabels(response.data[0]);
                 setData(response.data[1]);
                 setLabels2(response.data[2]);
-                setData2(response.data[3])
+                setData2(response.data[3]);
+                setLabels3(response.data[4]);
+                setData3(response.data[5]);
+                setLabels4(response.data[6]);
+                setData4(response.data[7]);
         })
         .catch(function(error){
                 console.log(error);
@@ -225,6 +231,26 @@ function Jugadores({ match, history }) {
                 ]}
            layout={{ width: 640, height: 480, title: "Roles jugados en las últimas 40 partidas"}}
           />
+        <Plot
+           data={[
+                { type: "bar", 
+                  x: lbl3, 
+                  y: datos3,
+                  marker: { color: 'rgb(23,24,25)'}
+                  },
+                ]}
+           layout={{ width: 640, height: 480, title: "Tres campeones con los mejores promedios de kda de las ultimas 40 partidas"}}
+        />
+         <Plot
+           data={[
+                { type: "bar", 
+                  x: lbl4, 
+                  y: datos4,
+                  marker: { color: 'rgb(23,24,25)'}
+                  },
+                ]}
+           layout={{ width: 640, height: 480, title: "Tres campeones con los mejores promedios de kills de las ultimas 40 partidas"}}
+        />
         </div>
     
 
