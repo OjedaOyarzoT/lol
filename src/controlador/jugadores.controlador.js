@@ -75,24 +75,31 @@ jugadores.cienPartidas = async(req,res)=>{
         }else{
             switch(rol[i]){
                 case 'BOTTOM':
-                    linea.push("ADC");
+                    var p = "ADC";
+                   // linea.push("ADC");
                     break;
                 case 'MIDDLE':
-                    linea.push("MID");
+                    var p = "MID";
+                    //linea.push("MID");
                     break;
                 case 'TOP':
-                    linea.push("TOP");
+                    var p = "TOP";
+                    //linea.push("TOP");
                     break;
                 case 'UTILITY':
-                    linea.push("SUPP");
+                    var p = "SUPP";
+                    //linea.push("SUPP");
                     break;
                 case 'JUNGLE':
-                    linea.push("JUNGLA");
+                    var p = "JUNGLA";
+                   // linea.push("JUNGLA");
                     break;
                 case '':
-                    linea.push("Modo de juego sin roles");
+                    var p = "Modo de juego sin roles";
+                    //linea.push("Modo de juego sin roles");
                     break;
             }
+            linea.push(p);
             cont.push(contadorRol);
             contadorRol = 1 ;
         }
@@ -125,9 +132,12 @@ for(var x=0;x<inf.length;x++){
         }    
     }
 }   
+   
     const winr1 = (((v1/(v1+d1))*100).toFixed(1));
     const winr2 = (((v2/(v2+d2))*100).toFixed(1));
     const winr3 = (((v3/(v3+d3))*100).toFixed(1));
+    console.log(linea,cont);
+    console.log([elementos1[0],elementos1[1],elementos1[2]], [winr1,winr2,winr3]);
     res.send([[elementos1[0],elementos1[1],elementos1[2]], [winr1,winr2,winr3]
    ,linea, cont]);
 };
@@ -219,7 +229,6 @@ jugadores.mastery = async(req,res)=>{
         arr2.push(response.data[2]);      
         res.json(arr2);
    }).catch(function(error){
-        console.log(error);
         res.json("{}");
    });
  
