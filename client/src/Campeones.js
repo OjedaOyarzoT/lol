@@ -3,10 +3,12 @@ import axios from 'axios';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'react-router-dom';
+import Plot from "react-plotly.js";
 
 function Campeones() {
 
     const Dato = () =>{
+        const [stats, setStats] = useState([]);
         const [infor, setInfor] = useState([]);
         const [pasiva, setPasiva] = useState([]);
         const [pimg, setPimg] = useState([]);
@@ -20,14 +22,15 @@ function Campeones() {
         const [rimg, setRimg] = useState([])
         const {nCampeon} = useParams();
         const campeonId = {nCampeon}.nCampeon;
-        console.log({nCampeon}.nCampeon);
+        //console.log({nCampeon}.nCampeon);
 
         useEffect(() => {
     
             axios.get("http://localhost:4000/champ/"+campeonId)
             .then(function(response){
-                console.log(response.data);
+                console.log(response.data.info);
                 setInfor(response.data)
+                setStats(response.data.info)
                 setPasiva(response.data.passive)
                 setPimg(response.data.passive.image)
                 setQname(response.data.spells[0]) //name
@@ -103,6 +106,26 @@ function Campeones() {
                             <p class="text-white">R: {rname.name}</p>
                         </div>
                     </div>
+                    <div clas="row">
+                        <div class="col-4">
+                            <Plot
+                                data={[
+                                    { type: "bar", 
+                                    x: ["ataque","defensa","magia","dificultad"], 
+                                    y: [stats.attack, stats.defense, stats.magic, stats.difficulty],
+                                    marker: { color: 'rgb(225,100,0)'}
+                                    },
+                                ]}
+                                layout={{ width: 400, height: 400, title: "Stats de " + infor.name}}
+                            />
+                        </div>
+                        <div class="col-8">
+                            <h1 class="text-white">Comparacion de stats</h1>
+                            <h4 class="text-white">Kled tiene la mayor cantidad de vida base: 810 y Anivia la menor cantidad: 550</h4>
+                            <h4 class="text-white">Galio tiene la mayor cantidad de mana base: 500 y Vayne la menor cantidad: 231.8</h4>
+                            <h4 class="text-white">Tryndamere tiene la mayor cantidad de daño base: 72 y Orianna la menor cantidad: 40</h4>
+                        </div>
+                    </div>   
                 </div>
             </div>
         );
