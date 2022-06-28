@@ -28,12 +28,20 @@ function getPlayerID(playername,reg){
 exports.getPlayerID = getPlayerID;
 
 function getChampionData(ChampionID){
-    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.11.1/data/es_MX/champion/"+ ChampionID +".json")
+    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.12.1/data/es_MX/champion/"+ ChampionID +".json")
     .then(response => {
         return response.data
     }).catch(err => err);
 }
 exports.getChampionData = getChampionData;
+
+function getAllChampionData(){
+    return axios.get("http://ddragon.leagueoflegends.com/cdn/12.12.1/data/en_US/champion.json")
+    .then(response => {
+        return response.data
+    }).catch(err => err);
+}
+exports.getAllChampionData = getAllChampionData;
 
 function getCofre(Server,NameId,ChampionKey){
     return axios.get("https://"+Server+".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"+NameId+"/by-champion/"+ChampionKey+"?api_key="+API_KEY)

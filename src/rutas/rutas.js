@@ -12,6 +12,7 @@ router.get("/mastery/:summonerName/:region", jugadores.mastery);
 router.get("/cienPartidas/:summonerName/:region",jugadores.cienPartidas);
 
 router.get("/champ/:championName", campeones.champ);
+router.get("/stats", campeones.allchamp);
 
 router.get("/id/:invid/:regio", cofres.id);
 router.get("/cofre/:ser/:idinv/:champkey", cofres.cofre);

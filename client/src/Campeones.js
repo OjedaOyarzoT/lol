@@ -8,7 +8,6 @@ import Plot from "react-plotly.js";
 function Campeones() {
 
     const Dato = () =>{
-        const [stats, setStats] = useState([]);
         const [infor, setInfor] = useState([]);
         const [pasiva, setPasiva] = useState([]);
         const [pimg, setPimg] = useState([]);
@@ -30,7 +29,6 @@ function Campeones() {
             .then(function(response){
                 console.log(response.data.info);
                 setInfor(response.data)
-                setStats(response.data.info)
                 setPasiva(response.data.passive)
                 setPimg(response.data.passive.image)
                 setQname(response.data.spells[0]) //name
@@ -53,7 +51,7 @@ function Campeones() {
                 <div class="camp">
                     <div class="row">
                         <div class="col-1">
-                            <img width="100" height="100" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/${infor.id}.png`} alt="img"></img>
+                            <img width="100" height="100" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/champion/${infor.id}.png`} alt="img"></img>
                         </div>
                         <div class="col-6">
                             <h1 class="text-white">{infor.name}: {infor.title}</h1>
@@ -68,7 +66,7 @@ function Campeones() {
                     <h3 class="text-white">Habilidades</h3>
                     <div class="row">
                         <div class="col-1" align="center">
-                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/passive/${pimg.full}`} alt ="img"></img>
+                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/passive/${pimg.full}`} alt ="img"></img>
                         </div>
                         <div class="col-6">
                             <p class="text-white">Pasiva: {pasiva.name}</p>
@@ -76,7 +74,7 @@ function Campeones() {
                     </div>
                     <div class="row">
                         <div class="col-1" align="center">
-                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/${qimg.full}`} alt ="img"></img>
+                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/spell/${qimg.full}`} alt ="img"></img>
                         </div>
                         <div class="col-6">
                             <p class="text-white">Q: {qname.name}</p>
@@ -84,7 +82,7 @@ function Campeones() {
                     </div>
                     <div class="row">
                         <div class="col-1" align="center">
-                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/${wimg.full}`} alt ="img"></img>
+                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/spell/${wimg.full}`} alt ="img"></img>
                         </div>
                         <div class="col-6">
                             <p class="text-white">W: {wname.name}</p>
@@ -92,7 +90,7 @@ function Campeones() {
                     </div>
                     <div class="row">
                         <div class="col-1" align="center">
-                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/${eimg.full}`} alt ="img"></img>
+                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/spell/${eimg.full}`} alt ="img"></img>
                         </div>
                         <div class="col-6">
                             <p class="text-white">E: {ename.name}</p>
@@ -100,34 +98,86 @@ function Campeones() {
                     </div>
                     <div class="row">
                         <div class="col-1" align="center">
-                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/${rimg.full}`} alt ="img"></img>
+                            <img width="30" height="30" src={`http://ddragon.leagueoflegends.com/cdn/12.12.1/img/spell/${rimg.full}`} alt ="img"></img>
                         </div>
                         <div class="col-6">
                             <p class="text-white">R: {rname.name}</p>
                         </div>
                     </div>
-                    <div clas="row">
-                        <div class="col-4">
-                            <Plot
-                                data={[
-                                    { type: "bar", 
-                                    x: ["ataque","defensa","magia","dificultad"], 
-                                    y: [stats.attack, stats.defense, stats.magic, stats.difficulty],
-                                    marker: { color: 'rgb(225,100,0)'}
-                                    },
-                                ]}
-                                layout={{ width: 400, height: 400, title: "Stats de " + infor.name}}
-                            />
-                        </div>
-                        <div class="col-8">
-                            <h1 class="text-white">Comparacion de stats</h1>
-                            <h4 class="text-white">Kled tiene la mayor cantidad de vida base: 810 y Anivia la menor cantidad: 550</h4>
-                            <h4 class="text-white">Galio tiene la mayor cantidad de mana base: 500 y Vayne la menor cantidad: 231.8</h4>
-                            <h4 class="text-white">Tryndamere tiene la mayor cantidad de daño base: 72 y Orianna la menor cantidad: 40</h4>
-                        </div>
-                    </div>   
                 </div>
             </div>
+        );
+
+    }
+    const Graf = () =>{
+        
+        const [stats, setStats] = useState([]);
+        const [infor, setInfor] = useState([]);
+        const [maxhp, setMaxhp] = useState([]);
+        const [maxhpname, setMaxhpname] = useState([]);
+        const [minhp, setMinhp] = useState([]);
+        const [minhpname, setMinhpname] = useState([]);
+        const [maxmana, setMaxmana] = useState([]);
+        const [maxmananame, setMaxmananame] = useState([]);
+        const {nCampeon} = useParams();
+        const [minmana, setMinmana] = useState([]);
+        const [minmananame, setMinmananame] = useState([]);
+        const [maxdmg, setMaxdmg] = useState([]);
+        const [maxdmgname, setMaxdmgname] = useState([]);
+        const [mindmg, setMindmg] = useState([]);
+        const [mindmgname, setMindmgname] = useState([]);
+        const campeonId = {nCampeon}.nCampeon;
+
+        useEffect(() => {
+    
+            axios.get("http://localhost:4000/champ/"+campeonId)
+            .then(function(response){
+                console.log(response.data.info);
+                setInfor(response.data)
+                setStats(response.data.info)
+            })
+            .catch(function(error){
+                console.log(error);
+           });
+           axios.get("http://localhost:4000/stats")
+            .then(function(response){
+                setMaxhp(response.data[0])
+                setMaxhpname(response.data[1])
+                setMinhp(response.data[2])
+                setMinhpname(response.data[3])
+                setMaxmana(response.data[4])
+                setMaxmananame(response.data[5])
+                setMinmana(response.data[6])
+                setMinmananame(response.data[7])
+                setMaxdmg(response.data[8])
+                setMaxdmgname(response.data[9])
+                setMindmg(response.data[10])
+                setMindmgname(response.data[11])
+            })
+            .catch(function(error){
+                console.log(error);
+           });
+        }, [])
+
+        return(
+            <div clas="row">
+                    <Plot
+                        data={[
+                            { type: "bar", 
+                              x: ["ataque","defensa","magia","dificultad"], 
+                              y: [stats.attack, stats.defense, stats.magic, stats.difficulty],
+                              marker: { color: 'rgb(225,100,0)'}
+                            },
+                            ]}
+                        layout={{ width: 400, height: 400, title: "Jugabilidad de " + infor.name}}
+                    />
+                <div class="col-8 float-end">
+                    <h2 class="text-white">Comparación de stats de todos los campeónes</h2>
+                    <h5 class="text-white">{maxhpname} tiene la mayor cantidad de vida base: {maxhp} y {minhpname} la menor cantidad: {minhp}</h5>
+                    <h5 class="text-white">{maxmananame} tiene la mayor cantidad de mana base: {maxmana} y {minmananame} la menor cantidad: {minmana}</h5>
+                    <h5 class="text-white">{maxdmgname} tiene la mayor cantidad de daño base: {maxdmg} y {mindmgname} la menor cantidad: {mindmg}</h5>
+                </div>
+            </div>   
         );
 
     }
@@ -137,6 +187,7 @@ function Campeones() {
         <a href="../"><button>Volver</button></a>
         <div class="container">
             <Dato />
+            <Graf />
         </div>
     </div>
     );
